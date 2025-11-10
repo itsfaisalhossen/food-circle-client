@@ -283,7 +283,11 @@ const Navbar = () => {
                     </>
                   ) : (
                     <>
-                      <BtnPrimary link={"/auth/login"} text={"Login"} />
+                      <Link to={"/auth/login"}>
+                        <button className="px-4 cursor-pointer md:px-8 py-2 md:py-2.5 text-center rounded-full bg-gray-700  text-white hover:bg-red-500 transition-all w-full duration-300 text-[14px] md:text-[15px]">
+                          Login
+                        </button>
+                      </Link>
                     </>
                   )}
                 </button>

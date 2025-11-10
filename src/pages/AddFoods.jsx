@@ -188,7 +188,7 @@ const AddFood = () => {
         <div className="w-full mx-auto bg-white/10 rounded-3xl text-black shadow-md p-6 md:p-10 text-center border border-gray-200">
           <div className="mb-10">
             <SectionTitle
-              title1={"🌍 Community Impact"}
+              title1={"Community Impact"}
               title2={"Together we’re reducing waste and feeding smiles!"}
             />
           </div>
