@@ -1,0 +1,100 @@
+import {
+  createUserWithEmailAndPassword,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+import { useEffect, useState } from "react";
+import { auth } from "../../firebase/firebase.config";
+import { AuthContext } from "./AuthContext";
+
+const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
+
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const createUserWithEmailAndPasswordFunc = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+  // const updateProfileFunc = (displayName, photoURL) => {
+  //   setLoading(true);
+  //   return updateProfile(auth?.currentUser, { displayName, photoURL });
+  // };
+
+  const updateProfileFunc = async (displayName, photoURL) => {
+    try {
+      setLoading(true);
+      await updateProfile(auth.currentUser, { displayName, photoURL });
+      setUser({
+        ...auth.currentUser,
+        displayName,
+        photoURL,
+      });
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+  // const sendEmailVerificationFunc = () => {
+  //   setLoading(true);
+  //   return sendEmailVerification(auth?.currentUser);
+  // };
+  const signInWithEmailAndPasswordFunc = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+  const signInWithGooglePopupFunc = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+  const signInWithGithubPopupFunc = () => {
+    setLoading(true);
+    return signInWithPopup(auth, githubProvider);
+  };
+  const sendPasswordResetEmailFunc = (email) => {
+    setLoading(true);
+    return sendPasswordResetEmail(auth, email);
+  };
+  const signOutUserFunc = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
+
+  const authInfo = {
+    user,
+    setUser,
+    loading,
+    setLoading,
+    createUserWithEmailAndPasswordFunc,
+    signInWithEmailAndPasswordFunc,
+    sendPasswordResetEmailFunc,
+    signInWithGooglePopupFunc,
+    signInWithGithubPopupFunc,
+    // sendEmailVerificationFunc,
+    updateProfileFunc,
+    signOutUserFunc,
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  return <AuthContext value={authInfo}>{children}</AuthContext>;
+};
+export default AuthProvider;
