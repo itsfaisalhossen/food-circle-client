@@ -1,7 +1,107 @@
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Container from "../components/Container";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const Register = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const {
+    user,
+    setUser,
+    updateProfileFunc,
+    createUserWithEmailAndPasswordFunc,
+    signInWithGooglePopupFunc,
+    setLoading,
+  } = useAuth();
+  console.log(user);
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const email = e.target.email?.value;
+    const password = e.target.password?.value;
+    const displayName = e.target.name?.value;
+    const photoURL = e.target.photo?.value;
+    console.log({ email, displayName, photoURL, password });
+
+    const regEx =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?!.*\s).{8,}$/;
+
+    if (!regEx.test(password)) {
+      toast.error(
+        "⚠️Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.",
+        {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+        }
+      );
+      return;
+    }
+
+    // return;
+
+    createUserWithEmailAndPasswordFunc(email, password)
+      .then((res) => {
+        const user = res.user;
+        Swal.fire({
+          title: "Account Create Successful",
+          icon: "success",
+          draggable: true,
+        });
+        updateProfileFunc(displayName, photoURL)
+          .then(() => {
+            setUser({ ...user, displayName, photoURL });
+            navigate(location.state ? location.state : "/");
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            setUser(user);
+          });
+        setUser(res.user);
+        setLoading(false);
+        e.target.reset();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
+  };
+
+  const handleGoogleSignin = () => {
+    signInWithGooglePopupFunc()
+      .then((res) => {
+        console.log(res.user);
+        setLoading(false);
+        setUser(res?.user);
+        toast.success("SignIn Successful", {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+        });
+        navigate(location.state ? location.state : "/");
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        toast.error(err.message);
+      });
+  };
+
   return (
     <Container>
       <div className="w-full my-14 md:my-24 max-w-[660px] p-6 md:p-10 m-auto bg-white rounded-lg shadow-md">
@@ -13,7 +113,7 @@ const Register = () => {
         </div>
 
         {/* Form */}
-        <form className="mt-6">
+        <form onSubmit={handleRegister} className="mt-6">
           {/* Username */}
           <div>
             <label className="block text-sm text-gray-800 dark:text-gray-200">
@@ -38,6 +138,7 @@ const Register = () => {
             <input
               type="text"
               name="photo"
+              required
               placeholder="Photo_URL"
               className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-full dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
@@ -54,6 +155,7 @@ const Register = () => {
             <input
               type="email"
               name="email"
+              required
               placeholder="Your Email"
               className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-full dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
@@ -70,6 +172,7 @@ const Register = () => {
             <input
               type="password"
               name="password"
+              required
               placeholder="Your Password"
               className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-full dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
@@ -79,7 +182,7 @@ const Register = () => {
           <div className="mt-6">
             <input
               className="px-4 w-full cursor-pointer md:px-6  py-2 md:py-3 rounded-full bg-red-500 text-white  hover:bg-red-600 transition-all duration-300"
-              type="button"
+              type="submit"
               value="Sign In"
             />
           </div>
@@ -100,6 +203,7 @@ const Register = () => {
         <div className="flex items-center mt-6">
           {/* Google Button */}
           <button
+            onClick={handleGoogleSignin}
             type="button"
             className="px-4 flex items-center w-full text-center justify-center md:px-6 py-2 md:py-3 rounded-full border hover:border-black border-red-500 hover:bg-black  hover:text-white text-black cursor-pointer transition-all duration-300 textxl"
           >
@@ -108,8 +212,6 @@ const Register = () => {
             </svg>
             <span className="hidden mx-2 sm:inline">Sign in with Google</span>
           </button>
-
-          {/* Twitter Button */}
         </div>
 
         {/* Create Account */}

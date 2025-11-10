@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
 import useAuth from "../hooks/useAuth";
 import BtnPrimary from "./BtnPrimary";
-import BtnOutLine from "./BtnOutLine";
+import toast from "react-hot-toast";
 // import logoIcon from "../assets/FoodCircle.png";
 
 const Navbar = () => {
@@ -10,8 +10,31 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const { user } = useAuth();
+  const { user, signOutUserFunc, setUser, setLoading } = useAuth();
   console.log(user);
+
+  const handleSignout = () => {
+    signOutUserFunc()
+      .then(() => {
+        toast.success("Signout Successful", {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+        });
+        setUser(null);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
+  };
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -31,7 +54,7 @@ const Navbar = () => {
     >
       {/* <Container> */}
       <nav className="relative">
-        <div className="px-4 md:px-12 lg:px-[120px]  py-6 mx-auto">
+        <div className="px-4 md:px-12 lg:px-[120px] py-6 md:py-8 mx-auto">
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="flex items-center justify-between">
               <Link to={"/"} className="flex items-center gap-2">
@@ -102,51 +125,47 @@ const Navbar = () => {
                             : "opacity-0 -translate-x-full"
                         }`}
             >
-              <div className="flex flex-col  text-[15px] -mx-6 lg:flex-row lg:items-center lg:mx-2">
+              <div className="flex flex-col text-[15px] -mx-6 lg:flex-row lg:items-center lg:mx-2">
                 <NavLink
                   to={"/"}
-                  className="px-2 py-1.5 mx-2 mt-2 text-white hover:text-black transition-colors duration-300 
-                           transform rounded-md lg:mt-0  hover:bg-gray-100 
+                  className="px-2 py-1.5 mx-2 mt-2 text-white hover:text-red-500 transition-colors duration-300 
+                           transform rounded-md lg:mt-0   
                             "
                 >
                   Home
                 </NavLink>
                 <NavLink
                   to={"/available-foods"}
-                  className="px-2 py-1.5 mx-2 mt-2 text-white hover:text-black transition-colors duration-300 
-                           transform rounded-md lg:mt-0  hover:bg-gray-100 
+                  className="px-2 py-1.5 mx-2 mt-2 text-white hover:text-red-500 transition-colors duration-300 
+                           transform rounded-md lg:mt-0   
                             "
                 >
                   Available Foods
                 </NavLink>
-                {/* {user && (
-                  <> */}
                 <NavLink
                   to={"/add-foods"}
-                  className="px-2 py-1.5 mx-2 mt-2 text-white hover:text-black transition-colors duration-300 
-                           transform rounded-md lg:mt-0  hover:bg-gray-100 
+                  className="px-2 hidden max-md:block py-1.5 mx-2 mt-2 text-white hover:text-red-500 transition-colors duration-300 
+                           transform rounded-md lg:mt-0   
                             "
                 >
                   Add Foods
                 </NavLink>
                 <NavLink
-                  to={"/manage-my-foods"}
-                  className="px-2 py-1.5 mx-2 mt-2 text-white hover:text-black transition-colors duration-300 
-                           transform rounded-md lg:mt-0  hover:bg-gray-100 
-                            "
-                >
-                  Manage My Foods
-                </NavLink>
-                <NavLink
-                  to={"/my-food-requests"}
-                  className="px-2 py-1.5 mx-2 mt-2 text-white hover:text-black transition-colors duration-300 
-                           transform rounded-md lg:mt-0  hover:bg-gray-100 
+                  to={"/my-foods-request"}
+                  className="px-2 hidden max-md:block py-1.5 mx-2 mt-2 text-white hover:text-red-500 transition-colors duration-300 
+                           transform rounded-md lg:mt-0   
                             "
                 >
                   My Foods Request
                 </NavLink>
-                {/* </>
-                )} */}
+                <NavLink
+                  to={"/manage-my-foods"}
+                  className="px-2 hidden max-md:block py-1.5 mx-2 mt-2 text-white hover:text-red-500 transition-colors duration-300 
+                           transform rounded-md lg:mt-0   
+                            "
+                >
+                  Manage My Foods
+                </NavLink>
               </div>
 
               <div className="flex items-center mt-4  lg:mt-0">
@@ -161,10 +180,12 @@ const Navbar = () => {
                         {/* Dropdown toggle button */}
                         <div
                           onClick={() => setIsOpen(!isOpen)}
-                          className="w-8 h-8 overflow-hidden cursor-pointer border-2 border-gray-400 rounded-full"
+                          className="w-8 h-8 overflow-hidden cursor-pointer border-2 border-red-400 rounded-full"
                         >
                           <img
-                            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
+                            referrerPolicy="no-referrer"
+                            title={user?.displayName}
+                            src={user?.photoURL}
                             className="object-cover w-full h-full"
                             alt="avatar"
                           />
@@ -173,9 +194,9 @@ const Navbar = () => {
                         {/* Dropdown menu */}
                         {isOpen && (
                           <div className="max-sm:hidden cursor-pointer absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800 transition ease-out duration-100 transform opacity-100 scale-100">
-                            <Link
+                            <NavLink
                               to={"/add-foods"}
-                              className="flex items-center px-3 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                              className="flex hover:bg-gray-100 items-center px-3 py-3 text-sm text-gray-800 hover:text-red-500 capi5alize transition-colors duration-300 transform dark:text-gray-300   "
                             >
                               <svg
                                 className="w-5 h-5 mx-1"
@@ -193,31 +214,10 @@ const Navbar = () => {
                                 />
                               </svg>
                               <span className="mx-1">Add Foods</span>
-                            </Link>
-                            <Link
-                              to={"/manage-my-foods"}
-                              className="flex items-center px-3 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-                            >
-                              <svg
-                                className="w-5 h-5 mx-1"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"
-                                  fill="currentColor"
-                                />
-                                <path
-                                  d="M6.34315 16.3431C4.84285 17.8434 4 19.8783 4 22H6C6 20.4087 6.63214 18.8826 7.75736 17.7574C8.88258 16.6321 10.4087 16 12 16C13.5913 16 15.1174 16.6321 16.2426 17.7574C17.3679 18.8826 18 20.4087 18 22H20C20 19.8783 19.1571 17.8434 17.6569 16.3431C16.1566 14.8429 14.1217 14 12 14C9.87827 14 7.84344 14.8429 6.34315 16.3431Z"
-                                  fill="currentColor"
-                                />
-                              </svg>
-                              <span className="mx-1">Manage My Foods</span>
-                            </Link>
-                            <Link
-                              to={"/my-food-requests"}
-                              className="flex items-center px-3 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                            </NavLink>
+                            <NavLink
+                              to={"/my-foods-request"}
+                              className="flex hover:bg-gray-100 items-center px-3 py-3 text-sm text-gray-800 hover:text-red-500 capi5alize transition-colors duration-300 transform dark:text-gray-300   "
                             >
                               <svg
                                 className="w-5 h-5 mx-1"
@@ -235,13 +235,34 @@ const Navbar = () => {
                                 />
                               </svg>
                               <span className="mx-1">My Foods Request</span>
-                            </Link>
+                            </NavLink>
+                            <NavLink
+                              to={"/manage-my-foods"}
+                              className="flex hover:bg-gray-100 items-center px-3 py-3 text-sm text-gray-800 hover:text-red-500 capi5alize transition-colors duration-300 transform dark:text-gray-300   "
+                            >
+                              <svg
+                                className="w-5 h-5 mx-1"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"
+                                  fill="currentColor"
+                                />
+                                <path
+                                  d="M6.34315 16.3431C4.84285 17.8434 4 19.8783 4 22H6C6 20.4087 6.63214 18.8826 7.75736 17.7574C8.88258 16.6321 10.4087 16 12 16C13.5913 16 15.1174 16.6321 16.2426 17.7574C17.3679 18.8826 18 20.4087 18 22H20C20 19.8783 19.1571 17.8434 17.6569 16.3431C16.1566 14.8429 14.1217 14 12 14C9.87827 14 7.84344 14.8429 6.34315 16.3431Z"
+                                  fill="currentColor"
+                                />
+                              </svg>
+                              <span className="mx-1">Manage My Foods</span>
+                            </NavLink>
 
                             {/* Add other <a> elements here (same as original markup) */}
                             <hr className="border-gray-200 dark:border-gray-700" />
-                            <a
-                              href="#"
-                              className="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                            <div
+                              onClick={handleSignout}
+                              className="flex hover:bg-gray-100 items-center p-3 text-sm text-gray-800 hover:text-red-500 capi5alize transition-colors duration-300 transform dark:text-gray-300   "
                             >
                               <svg
                                 className="w-5 h-5 mx-1"
@@ -255,7 +276,7 @@ const Navbar = () => {
                                 />
                               </svg>
                               <span className="mx-1">Sign Out</span>
-                            </a>
+                            </div>
                           </div>
                         )}
                       </div>
@@ -265,10 +286,6 @@ const Navbar = () => {
                       <BtnPrimary link={"/auth/login"} text={"Login"} />
                     </>
                   )}
-
-                  {/* <h3 className="mx-2 text-gray-100  lg:hidden">
-                    Khatab wedaa
-                  </h3> */}
                 </button>
               </div>
             </div>

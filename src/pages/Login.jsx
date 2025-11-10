@@ -1,7 +1,93 @@
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Container from "../components/Container";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
+  const location = useLocation();
+  console.log(location);
+
+  const navigate = useNavigate();
+  const from = location.state || "/";
+  const [email, setEmail] = useState("");
+  const {
+    user,
+    setUser,
+    signInWithEmailAndPasswordFunc,
+    signInWithGooglePopupFunc,
+    setLoading,
+  } = useAuth();
+  console.log(user);
+
+  const handleSignin = (e) => {
+    e.preventDefault();
+    const email = e.target.email?.value;
+    const password = e.target.password?.value;
+
+    signInWithEmailAndPasswordFunc(email, password)
+      .then((res) => {
+        // if (!res?.user?.emailVerified) {
+        //   toast.error("Your email is not Verified.");
+        //   return;
+        // }
+        setUser(res.user);
+        navigate(from);
+        setLoading(false);
+        toast.success("Login Successful", {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        toast.error("Password is Worng", {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+        });
+        setLoading(false);
+      });
+  };
+
+  const handleGoogleSignin = () => {
+    signInWithGooglePopupFunc()
+      .then((res) => {
+        setLoading(false);
+        setUser(res?.user);
+        toast.success("SignIn Successful", {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+        });
+        navigate(location.state ? location.state : "/");
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        toast.error(err.message);
+      });
+  };
+
   return (
     <Container>
       <div className="w-full my-14 md:my-24 max-w-[660px] p-6 md:p-10 m-auto bg-white rounded-lg shadow-md">
@@ -13,19 +99,22 @@ const Login = () => {
         </div>
 
         {/* Form */}
-        <form className="mt-6">
+        <form onSubmit={handleSignin} className="mt-6">
           {/* Username */}
           <div>
             <label
               htmlFor="username"
               className="block text-sm text-gray-800 dark:text-gray-200"
             >
-              Name
+              Email
             </label>
             <input
-              type="text"
               required
-              placeholder="User Name"
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email address"
               className="block w-full px-4 md:px-6  py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-full dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
@@ -45,8 +134,11 @@ const Login = () => {
             </div>
 
             <input
+              required
+              // type={show ? "text" : "password"}
               type="password"
-              placeholder="Your Password"
+              name="password"
+              placeholder="Password"
               className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-full dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
@@ -55,7 +147,7 @@ const Login = () => {
           <div className="mt-6">
             <input
               className="px-4 w-full cursor-pointer md:px-8  py-2 md:py-3 rounded-full bg-red-500 text-white  hover:bg-red-600 transition-all duration-300"
-              type="button"
+              type="submit"
               value="Sign In"
             />
           </div>
@@ -76,6 +168,7 @@ const Login = () => {
         <div className="flex items-center mt-6">
           {/* Google Button */}
           <button
+            onClick={handleGoogleSignin}
             type="button"
             className="px-4 flex items-center w-full text-center justify-center md:px-8 py-2 md:py-3 rounded-full border border-red-500 hover:border-black hover:bg-black hover:text-white text-black cursor-pointer transition-all duration-300 textxl"
           >
@@ -92,6 +185,7 @@ const Login = () => {
         <p className="mt-8 text-xs font-light text-center text-gray-500">
           Don&apos;t have an account?{" "}
           <Link
+            state={location?.state}
             to={"/auth/register"}
             className="font-medium text-gray-700 dark:text-gray-200 hover:underline"
           >

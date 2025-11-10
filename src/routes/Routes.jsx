@@ -10,6 +10,7 @@ import ManageMyFoods from "../pages/ManageMyFoods";
 import FoodDetails from "../pages/FoodDetails";
 import MyFoodRequests from "../pages/MyFoodRequests";
 import AddFoods from "../pages/AddFoods";
+import PrivetRoute from "./PrivetRoute";
 
 export const router = createBrowserRouter([
   {
@@ -17,11 +18,39 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { index: true, element: <Home /> },
-      { path: "add-foods", element: <AddFoods /> },
-      { path: "food-details", element: <FoodDetails /> },
       { path: "available-foods", element: <AvailableFoods /> },
-      { path: "my-food-requests", element: <MyFoodRequests /> },
-      { path: "manage-my-foods", element: <ManageMyFoods /> },
+      {
+        path: "food-details",
+        element: (
+          <PrivetRoute>
+            <FoodDetails />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "add-foods",
+        element: (
+          <PrivetRoute>
+            <AddFoods />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "my-foods-request",
+        element: (
+          <PrivetRoute>
+            <MyFoodRequests />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "manage-my-foods",
+        element: (
+          <PrivetRoute>
+            <ManageMyFoods />
+          </PrivetRoute>
+        ),
+      },
     ],
   },
   {
