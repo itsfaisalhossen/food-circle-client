@@ -1,11 +1,13 @@
 import BtnPrimary from "./BtnPrimary";
 import Container from "./Container";
+import SectionTitle from "./SectionTitle";
 
 const OurMission = () => {
   return (
     <section className="bg-white py-16">
       <Container>
         <div>
+          <SectionTitle title1={"Our Mission"} />
           <div className="lg:flex lg:items-center lg:gap-12">
             {/* Left Side Image */}
             <div className="lg:w-1/2 mb-10 lg:mb-0">

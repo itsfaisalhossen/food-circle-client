@@ -1,3 +1,4 @@
+import FeaturedFoods from "../components/FeaturedFoods";
 import HeroBanner from "../components/HeroBanner";
 import HowItWorksSection from "../components/HowItWorksSection";
 import NewsletterCTASection from "../components/NewsletterCTASection";
@@ -8,6 +9,7 @@ const Home = () => {
   return (
     <div className="space-y-12 md:space-y-24">
       <HeroBanner />
+      <FeaturedFoods />
       <HowItWorksSection />
       <OurMission />
       <SafetySection />

@@ -36,7 +36,7 @@ const SafetySection = () => {
           {safetyFeatures.map((feature, index) => (
             <div
               key={index}
-              className="p-8 rounded-2xl border duration-300 border-gray-800 flex flex-col items-center text-center transition hover:border-red-500"
+              className="p-8 rounded-2xl border duration-300 border-gray-300 flex flex-col items-center text-center transition hover:border-red-500"
             >
               <feature.icon className="w-12 h-12 text-red-500 mb-4" />
               <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
