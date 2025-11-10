@@ -1,8 +1,10 @@
+import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import Container from "../components/Container";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
+import { UtensilsCrossed } from "lucide-react";
 
 const Login = () => {
   const location = useLocation();
@@ -92,9 +94,9 @@ const Login = () => {
     <Container>
       <div className="w-full my-14 md:my-24 max-w-[660px] p-6 md:p-10 m-auto bg-white rounded-lg shadow-md">
         {/* Logo */}
-        <div className="flex justify-center mx-auto">
-          <p className="font-medium text-lg md:text-xl text-black">
-            FoodCircle
+        <div className="flex text-center justify-center items-center gap-2">
+          <p className="font-semibold text-black sirin-stencil-regular flex items-center gap-2 text-lg md:text-2xl">
+            <UtensilsCrossed size={32} color="#FA360F" /> FoodCircle
           </p>
         </div>
 
@@ -115,7 +117,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email address"
-              className="block w-full px-4 md:px-6  py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-full dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              className="block w-full px-4 md:px-6  py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-xl dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
 
@@ -139,14 +141,14 @@ const Login = () => {
               type="password"
               name="password"
               placeholder="Password"
-              className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-full dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-xl dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
 
           {/* Sign In Button */}
           <div className="mt-6">
             <input
-              className="px-4 w-full cursor-pointer md:px-8  py-2 md:py-3 rounded-full bg-red-500 text-white  hover:bg-red-600 transition-all duration-300"
+              className="px-4 w-full cursor-pointer md:px-8  py-2 md:py-3 rounded-xl bg-red-500 text-white  hover:bg-red-600 transition-all duration-300"
               type="submit"
               value="Sign In"
             />
@@ -170,19 +172,17 @@ const Login = () => {
           <button
             onClick={handleGoogleSignin}
             type="button"
-            className="px-4 flex items-center w-full text-center justify-center md:px-8 py-2 md:py-3 rounded-full border border-red-500 hover:border-black hover:bg-black hover:text-white text-black cursor-pointer transition-all duration-300 textxl"
+            className="px-4 flex items-center w-full text-center justify-center md:px-8 py-2 md:py-3 rounded-xl border border-black hover:border-black bg-black text-white  cursor-pointer transition-all duration-300 textxl"
           >
-            <svg className="w-4 h-4 mx-2 fill-current" viewBox="0 0 24 24">
-              <path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z" />
-            </svg>
-            <span className="hidden mx-2 sm:inline">Sign in with Google</span>
+            <FcGoogle size={22} />
+            <span className="mx-2 sm:inline">Sign in with Google</span>
           </button>
 
           {/* Twitter Button */}
         </div>
 
         {/* Create Account */}
-        <p className="mt-8 text-xs font-light text-center text-gray-500">
+        <p className="mt-8 text-sm font-light text-center text-gray-700">
           Don&apos;t have an account?{" "}
           <Link
             state={location?.state}

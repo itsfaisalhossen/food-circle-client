@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
 import useAuth from "../hooks/useAuth";
-import BtnPrimary from "./BtnPrimary";
 import toast from "react-hot-toast";
-// import logoIcon from "../assets/FoodCircle.png";
+import {
+  BatteryPlus,
+  HandPlatter,
+  LogOut,
+  Settings2,
+  UtensilsCrossed,
+} from "lucide-react";
 
 const Navbar = () => {
+  const { user, signOutUserFunc, setUser, setLoading } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
-  const { user, signOutUserFunc, setUser, setLoading } = useAuth();
-  console.log(user);
 
   const handleSignout = () => {
     signOutUserFunc()
@@ -58,13 +61,8 @@ const Navbar = () => {
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="flex items-center justify-between">
               <Link to={"/"} className="flex items-center gap-2">
-                {/* <img
-                  className="w-auto bg-red-100 h8 md:h12"
-                  src="https://cdn.prod.website-files.com/653a12ff1d377f67d4b06d12/661a682bb78029611534ad68_brand-logo.svg"
-                  alt="logo"
-                /> */}
-                <p className="font-medium text-lg md:text-xl text-white hover:textblack">
-                  FoodCircle
+                <p className="font-semibold text-white sirin-stencil-regular flex items-center gap-2 text-lg md:text-2xl">
+                  <UtensilsCrossed size={32} color="#FA360F" /> FoodCircle
                 </p>
               </Link>
 
@@ -198,63 +196,22 @@ const Navbar = () => {
                               to={"/add-foods"}
                               className="flex hover:bg-gray-100 items-center px-3 py-3 text-sm text-gray-800 hover:text-red-500 capi5alize transition-colors duration-300 transform dark:text-gray-300   "
                             >
-                              <svg
-                                className="w-5 h-5 mx-1"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"
-                                  fill="currentColor"
-                                />
-                                <path
-                                  d="M6.34315 16.3431C4.84285 17.8434 4 19.8783 4 22H6C6 20.4087 6.63214 18.8826 7.75736 17.7574C8.88258 16.6321 10.4087 16 12 16C13.5913 16 15.1174 16.6321 16.2426 17.7574C17.3679 18.8826 18 20.4087 18 22H20C20 19.8783 19.1571 17.8434 17.6569 16.3431C16.1566 14.8429 14.1217 14 12 14C9.87827 14 7.84344 14.8429 6.34315 16.3431Z"
-                                  fill="currentColor"
-                                />
-                              </svg>
+                              <BatteryPlus size={22} className="rotate-90" />
                               <span className="mx-1">Add Foods</span>
                             </NavLink>
                             <NavLink
                               to={"/my-foods-request"}
                               className="flex hover:bg-gray-100 items-center px-3 py-3 text-sm text-gray-800 hover:text-red-500 capi5alize transition-colors duration-300 transform dark:text-gray-300   "
                             >
-                              <svg
-                                className="w-5 h-5 mx-1"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"
-                                  fill="currentColor"
-                                />
-                                <path
-                                  d="M6.34315 16.3431C4.84285 17.8434 4 19.8783 4 22H6C6 20.4087 6.63214 18.8826 7.75736 17.7574C8.88258 16.6321 10.4087 16 12 16C13.5913 16 15.1174 16.6321 16.2426 17.7574C17.3679 18.8826 18 20.4087 18 22H20C20 19.8783 19.1571 17.8434 17.6569 16.3431C16.1566 14.8429 14.1217 14 12 14C9.87827 14 7.84344 14.8429 6.34315 16.3431Z"
-                                  fill="currentColor"
-                                />
-                              </svg>
+                              <HandPlatter size={20} />
                               <span className="mx-1">My Foods Request</span>
                             </NavLink>
                             <NavLink
                               to={"/manage-my-foods"}
                               className="flex hover:bg-gray-100 items-center px-3 py-3 text-sm text-gray-800 hover:text-red-500 capi5alize transition-colors duration-300 transform dark:text-gray-300   "
                             >
-                              <svg
-                                className="w-5 h-5 mx-1"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"
-                                  fill="currentColor"
-                                />
-                                <path
-                                  d="M6.34315 16.3431C4.84285 17.8434 4 19.8783 4 22H6C6 20.4087 6.63214 18.8826 7.75736 17.7574C8.88258 16.6321 10.4087 16 12 16C13.5913 16 15.1174 16.6321 16.2426 17.7574C17.3679 18.8826 18 20.4087 18 22H20C20 19.8783 19.1571 17.8434 17.6569 16.3431C16.1566 14.8429 14.1217 14 12 14C9.87827 14 7.84344 14.8429 6.34315 16.3431Z"
-                                  fill="currentColor"
-                                />
-                              </svg>
+                              <Settings2 size={20} />
+                              {/* <ChartNoAxesGantt size={20} /> */}
                               <span className="mx-1">Manage My Foods</span>
                             </NavLink>
 
@@ -264,17 +221,7 @@ const Navbar = () => {
                               onClick={handleSignout}
                               className="flex hover:bg-gray-100 items-center p-3 text-sm text-gray-800 hover:text-red-500 capi5alize transition-colors duration-300 transform dark:text-gray-300   "
                             >
-                              <svg
-                                className="w-5 h-5 mx-1"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M19 21H10C8.89543 21 8 20.1046 8 19V15H10V19H19V5H10V9H8V5C8 3.89543 8.89543 3 10 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21ZM12 16V13H3V11H12V8L17 12L12 16Z"
-                                  fill="currentColor"
-                                />
-                              </svg>
+                              <LogOut size={20} />
                               <span className="mx-1">Sign Out</span>
                             </div>
                           </div>
@@ -284,7 +231,7 @@ const Navbar = () => {
                   ) : (
                     <>
                       <Link to={"/auth/login"}>
-                        <button className="px-4 cursor-pointer md:px-8 py-2 md:py-2.5 text-center rounded-full bg-gray-700  text-white hover:bg-red-500 transition-all w-full duration-300 text-[14px] md:text-[15px]">
+                        <button className="px-4 cursor-pointer md:px-8 py-2 md:py-2.5 text-center rounded-xl bg-gray-700  text-white hover:bg-red-500 transition-all w-full duration-300 text-[14px] md:text-[15px]">
                           Login
                         </button>
                       </Link>

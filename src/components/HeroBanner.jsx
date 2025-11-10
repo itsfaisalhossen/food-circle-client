@@ -30,7 +30,7 @@ const HeroBanner = () => {
                 <BtnPrimary text={"🍽️ View All Foods"} link={"/"} />
                 <input
                   placeholder="🔍 Search Foods"
-                  className="px-4 md:px-6 border-2 py-2 md:py-3 rounded-full border-red-500 text-black transition-all duration-300 textxl"
+                  className="px-4 md:px-6 border py-2 md:py-3 rounded-xl border-red-500 text-black transition-all duration-300"
                   type="text"
                 />
               </div>
