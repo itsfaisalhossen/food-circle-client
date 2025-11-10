@@ -1,4 +1,3 @@
-import BtnOutLine from "./BtnOutLine";
 import BtnPrimary from "./BtnPrimary";
 import Container from "./Container";
 
