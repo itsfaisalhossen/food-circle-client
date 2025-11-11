@@ -3,7 +3,7 @@ import Container from "./Container";
 
 const HeroBanner = () => {
   return (
-    <div>
+    <div className="mt-14 md:mt-20">
       <Container>
         <section className="relative bg[#0f0f0f] text-white overflow-hidden">
           <div className="flex flex-col-reverse lg:flex-row items-center py-24 gap-12">
