@@ -167,8 +167,8 @@ const Navbar = () => {
               </div>
 
               <div className="flex items-center mt-4  lg:mt-0">
-                <button
-                  type="button"
+                <div
+                  // type="button"
                   className="flex items-center focus:outline-none"
                   aria-label="toggle profile dropdown"
                 >
@@ -237,7 +237,7 @@ const Navbar = () => {
                       </Link>
                     </>
                   )}
-                </button>
+                </div>
               </div>
             </div>
           </div>

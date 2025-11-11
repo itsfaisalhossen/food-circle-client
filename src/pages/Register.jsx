@@ -25,7 +25,7 @@ const Register = () => {
     const password = e.target.password?.value;
     const displayName = e.target.name?.value;
     const photoURL = e.target.photo?.value;
-    console.log({ email, displayName, photoURL, password });
+    // console.log({ email, displayName, photoURL, password });
 
     const regEx =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?!.*\s).{8,}$/;
@@ -68,6 +68,20 @@ const Register = () => {
             console.log(err);
             setUser(user);
           });
+        const newUser = {
+          name: displayName,
+          image: photoURL,
+          email: res?.user?.email,
+        };
+        console.log(newUser);
+
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log("data after user save", data));
         setUser(res.user);
         setLoading(false);
         e.target.reset();
@@ -84,6 +98,19 @@ const Register = () => {
         console.log(res.user);
         setLoading(false);
         setUser(res?.user);
+        const newUser = {
+          name: res?.user?.displayName,
+          email: res?.user?.email,
+          image: res?.user.photoURL,
+        };
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log("data after user save", data));
+
         toast.success("SignIn Successful", {
           style: {
             border: "1px solid #713200",

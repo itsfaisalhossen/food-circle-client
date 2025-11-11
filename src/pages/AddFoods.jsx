@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
 import useAuth from "../hooks/useAuth";
@@ -17,7 +18,7 @@ const AddFood = () => {
     const donatorName = e.target.donatorName.value;
     const donatorEmail = e.target.donatorEmail.value;
     const donatorPhotoUrl = user?.photoURL;
-    console.log({
+    const newFoods = {
       foodName,
       foodUrl,
       location,
@@ -28,7 +29,31 @@ const AddFood = () => {
       donatorName,
       donatorEmail,
       donatorPhotoUrl,
-    });
+    };
+
+    fetch("http://localhost:3000/foods", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(newFoods),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data is submite successful", data);
+        if (data.insertedId) {
+          toast.success("Food Added Successful", {
+            style: {
+              border: "1px solid #713200",
+              padding: "16px",
+              color: "#713200",
+            },
+            iconTheme: {
+              primary: "#713200",
+              secondary: "#FFFAEE",
+            },
+          });
+        }
+        e.target.reset();
+      });
   };
 
   return (
@@ -179,7 +204,7 @@ const AddFood = () => {
                 <input
                   type="submit"
                   value="Add Food +"
-                  className="cursor-pointer px-6 md:px-10 py-2.5 md:py-3 text-center rounded-xl bg-gray-950 text-white hover:bg-red-500 transition-all duration-300 text-[14px] font-semibold md:text-[18px]"
+                  className="lg:w-1/2 cursor-pointer px-6 md:px-10 py-2.5 md:py-3 text-center rounded-xl bg-gray-950 text-white hover:bg-red-500 transition-all duration-300 text-[14px] font-semibold md:text-[18px]"
                 />
               </div>
             </form>

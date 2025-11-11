@@ -70,6 +70,18 @@ const Login = () => {
       .then((res) => {
         setLoading(false);
         setUser(res?.user);
+        const newUser = {
+          name: res?.user?.displayName,
+          email: res?.user?.email,
+          image: res?.user.photoURL,
+        };
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log("data after user save", data));
         toast.success("SignIn Successful", {
           style: {
             border: "1px solid #713200",
