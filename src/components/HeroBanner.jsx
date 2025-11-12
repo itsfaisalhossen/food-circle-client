@@ -27,7 +27,10 @@ const HeroBanner = () => {
               </p>
 
               <div className="flex items-center gap-4">
-                <BtnPrimary text={"🍽️ View All Foods"} link={"/"} />
+                <BtnPrimary
+                  link={"/available-foods"}
+                  text={"🍽️ View All Foods"}
+                />
                 <input
                   placeholder="🔍 Search Foods"
                   className="px-4 md:px-6 border py-2 md:py-3 rounded-xl border-red-500 text-black transition-all duration-300"

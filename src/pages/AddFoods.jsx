@@ -211,45 +211,7 @@ const AddFood = () => {
           </div>
         </div>
 
-        <div className="w-full mx-auto my-12 md:my-24">
-          <div className="mb-8">
-            <SectionTitle title1={"🌿 Food Sharing Tips"} />
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Use Fresh Containers",
-                desc: "Pack your food in clean, airtight containers to keep it fresh longer.",
-                icon: "🥡",
-              },
-              {
-                title: "Label Clearly",
-                desc: "Write the date and contents on the box to help receivers identify easily.",
-                icon: "🏷️",
-              },
-              {
-                title: "Stay Hygienic",
-                desc: "Always wear gloves or wash hands before handling donated food.",
-                icon: "🧼",
-              },
-            ].map((tip, idx) => (
-              <div
-                key={idx}
-                className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
-              >
-                <div className="text-4xl mb-3">{tip.icon}</div>
-                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-1">
-                  {tip.title}
-                </h4>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
-                  {tip.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="w-full mx-auto bg-white/10 rounded-3xl text-black shadow-md p-6 md:p-10 text-center border border-gray-200">
+        <div className="w-full mx-auto bg-white/10 mt-18 rounded-3xl text-black shadow-md p-6 md:p-10 text-center border border-gray-200">
           <div className="mb-10">
             <SectionTitle
               title1={"Community Impact"}

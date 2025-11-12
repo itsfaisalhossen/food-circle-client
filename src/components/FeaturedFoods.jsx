@@ -24,7 +24,7 @@ const FeaturedFoods = ({ foodItem }) => {
         </div>
         <div className="md:mt-14 flex items-center justify-center w-full">
           <Link to={"/available-foods"}>
-            <button className="px-4 md:w-[360px] md:px-8 py-3.5 lg:py-4 font-medium text-center rounded-xl bg-black  text-white hover:bg-red-500 transition-all duration-300 text-[14px] md:text-[15px]">
+            <button className="px-4 md:px-8 border-2 p-3 rounded-xl border-red-500 hover:bg-red-500 font-medium cursor-pointer hover:text-white text-black transition-all duration-300 textxl">
               Show All
             </button>
           </Link>

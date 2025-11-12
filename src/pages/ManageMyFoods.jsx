@@ -176,11 +176,11 @@ import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const ManageMyFoods = () => {
   const { user } = useAuth();
   const [foods, setFoods] = useState([]);
-
   useEffect(() => {
     if (user?.email) {
       fetch(`http://localhost:3000/foods?email=${user.email}`)
@@ -192,6 +192,40 @@ const ManageMyFoods = () => {
         .catch((err) => console.error("Error fetching foods:", err));
     }
   }, [user?.email]);
+
+  const handleDeleteFood = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("now delete", _id);
+        fetch(`http://localhost:3000/foods/${_id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("after delete", data);
+            if (data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your food has been deleted.",
+                icon: "success",
+              });
+
+              //
+              const remainingFoods = foods.filter((food) => food._id !== _id);
+              setFoods(remainingFoods);
+            }
+          });
+      }
+    });
+  };
 
   return (
     <div className="my-14 md:my-24">
@@ -249,7 +283,7 @@ const ManageMyFoods = () => {
 
                   <tbody className="bg-white divide-y divide-gray-200">
                     {foods.map((food, index) => (
-                      <tr key={food._id || index}>
+                      <tr key={food?._id || index}>
                         <td className="px-4 md:px-8 py-4 md:py-6 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
                             <p className="font-bold mr-2">{index + 1}</p>
@@ -288,6 +322,7 @@ const ManageMyFoods = () => {
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-6">
                             <button
+                              onClick={() => handleDeleteFood(food._id)}
                               className="text-gray-500 cursor-pointer transition-colors duration-200 hover:text-red-500 focus:outline-none"
                               title="Delete"
                             >

@@ -22,7 +22,7 @@ const NewsletterCTASection = () => {
           </div>
 
           <div className="flex flex-col md:flex-row justify-center gap-4 max-w-xl mx-auto">
-            <BtnOutLine text={"🍽️ Get Started"} />
+            <BtnOutLine link={"/add-foods"} text={"🍽️ Get Started"} />
           </div>
         </div>
       </div>

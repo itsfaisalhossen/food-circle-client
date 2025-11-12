@@ -10,7 +10,7 @@ const AvailableFoods = () => {
     <div className="my-14 md:my-24 ">
       <Container>
         <SectionTitle
-          title1={"Available Foods"}
+          title1={"Available Foods 🍲"}
           title2={
             "Discover a variety of fresh, surplus meals shared by the community, ready for pickup and enjoyment."
           }
