@@ -5,6 +5,7 @@ import {
   MailCheck,
   Barrel,
   UserRoundMinus,
+  Salad,
 } from "lucide-react";
 import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
@@ -16,15 +17,21 @@ import { Link } from "react-router";
 const ManageMyFoods = () => {
   const { user } = useAuth();
   const [foods, setFoods] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (user?.email) {
+      setLoading(true);
       fetch(`http://localhost:3000/foods?email=${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
           setFoods(data);
         })
-        .catch((err) => console.error("Error fetching foods:", err));
+        .catch((err) => console.error("Error fetching foods:", err))
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, [user?.email]);
 
@@ -62,6 +69,16 @@ const ManageMyFoods = () => {
     });
   };
 
+  if (loading) {
+    return (
+      <Container>
+        <div className="text-center py-34">
+          <div className="animate-spin rounded-full h-14 w-14 border-b-4 border-red-700 mx-auto"></div>
+        </div>
+      </Container>
+    );
+  }
+
   return (
     <div className="my-14 md:my-24">
       <SectionTitle
@@ -84,8 +101,8 @@ const ManageMyFoods = () => {
                     <tr>
                       <th className="py-3.5 px-4 text-sm font-semibold text-left text-gray-800">
                         <div className="flex items-center gap-x-3 ml-8">
-                          <UserRoundMinus size={16} />
-                          <span>Name</span>
+                          <Salad size={16} />
+                          <span>Foods</span>
                         </div>
                       </th>
 
@@ -99,7 +116,7 @@ const ManageMyFoods = () => {
                       <th className="px-4 py-3.5 text-sm font-semibold text-left text-gray-800">
                         <div className="flex items-center gap-x-2">
                           <Barrel size={16} />
-                          <span>Food</span>
+                          <span>Name</span>
                         </div>
                       </th>
 
@@ -140,17 +157,17 @@ const ManageMyFoods = () => {
                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                            <h2 className="text-sm font-normal text-emerald-500">
+                            <h2 className="text-sm font-normal text-emerald-700">
                               {food.status || "Available"}
                             </h2>
                           </div>
                         </td>
 
-                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
                           {food.foodName || "Unnamed Food"}
                         </td>
 
-                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
                           {food.donatorEmail || "N/A"}
                         </td>
 

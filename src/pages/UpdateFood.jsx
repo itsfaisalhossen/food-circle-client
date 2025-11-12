@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 
 const UpdateFood = () => {
   const foodInfo = useLoaderData();
-  // const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,12 +14,9 @@ const UpdateFood = () => {
     const foodUrl = form.foodUrl.value;
     const location = form.location.value;
     const date = form.date.value;
-    const foodQuantity = form.foodQuantity.value;
+    const foodQuantity = Number(e.target.foodQuantity.value);
     const status = form.status.value;
     const aditionalNote = form.aditionalNote.value;
-    const donatorName = form.donatorName.value;
-    const donatorEmail = form.donatorEmail.value;
-    const donatorPhotoUrl = foodInfo?.donatorPhotoUrl || "";
 
     const updatedFood = {
       foodName,
@@ -30,9 +26,6 @@ const UpdateFood = () => {
       foodQuantity,
       status,
       aditionalNote,
-      donatorName,
-      donatorEmail,
-      donatorPhotoUrl,
     };
 
     fetch(`http://localhost:3000/foods/${foodInfo?._id}`, {
@@ -44,7 +37,6 @@ const UpdateFood = () => {
       .then((data) => {
         console.log("Update response:", data);
 
-        // ✅ Adjust this based on your backend response format
         const modifiedCount = data.result?.modifiedCount || data.modifiedCount;
 
         if (modifiedCount > 0) {
@@ -59,9 +51,6 @@ const UpdateFood = () => {
               secondary: "#FFFAEE",
             },
           });
-
-          // Optional redirect after success
-          // setTimeout(() => navigate("/manage-my-foods"), 1500);
         } else {
           toast.error("No changes detected or update failed.");
         }
@@ -179,50 +168,6 @@ const UpdateFood = () => {
               className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
               focus:ring focus:ring-red-400 focus:border-transparent outline-none resize-none"
             ></textarea>
-          </div>
-
-          {/* --- Donator Information --- */}
-          <div className="mt-10 bg-red-50/60 border border-red-50 rounded-2xl p-6">
-            <h3 className="text-lg font-semibold text-black mb-4">
-              Donator Information
-            </h3>
-
-            <div className="grid md:grid-cols-3 gap-4 items-center">
-              <div className="flex justify-center">
-                <img
-                  src={foodInfo?.donatorPhotoUrl}
-                  alt={foodInfo?.donatorName}
-                  title={foodInfo?.donatorName}
-                  className="w-14 h-14 rounded-full border-2 border-red-400 shadow-md"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-500 mb-1">Name</label>
-                <input
-                  type="text"
-                  name="donatorName"
-                  defaultValue={foodInfo?.donatorName}
-                  className="w-full px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 
-                  focus:ring focus:ring-red-400 focus:border-transparent outline-none"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-500 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="donatorEmail"
-                  defaultValue={foodInfo?.donatorEmail}
-                  className="w-full px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 
-                  focus:ring focus:ring-red-400 focus:border-transparent outline-none"
-                  required
-                />
-              </div>
-            </div>
           </div>
 
           {/* --- Submit Button --- */}
