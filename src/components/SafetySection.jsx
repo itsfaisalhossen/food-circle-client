@@ -35,6 +35,7 @@ const SafetySection = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {safetyFeatures.map((feature, index) => (
             <div
+              data-aos="zoom-in"
               key={index}
               className="p-8 rounded-2xl border duration-300 border-gray-300 flex flex-col items-center text-center transition hover:border-red-500"
             >

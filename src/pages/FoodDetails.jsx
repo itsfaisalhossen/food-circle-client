@@ -3,6 +3,12 @@ import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({
+  delay: 40,
+  duration: 1000,
+});
 
 const FoodDetails = () => {
   const foodInf = useLoaderData();
@@ -34,7 +40,10 @@ const FoodDetails = () => {
             "Explore complete food details, including ingredients, quantity, location, donor info, and pickup availability for requests."
           }
         />
-        <div className="flex flex-col md:flex-row justify-between gap-10 items-center">
+        <div
+          data-aos="fade-up"
+          className="flex flex-col md:flex-row justify-between gap-10 items-center"
+        >
           <div className="flex-1 w-full">
             <div className="h-[380px] md:h-[560px]">
               <img

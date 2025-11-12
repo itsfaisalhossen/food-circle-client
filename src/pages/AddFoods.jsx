@@ -67,7 +67,7 @@ const AddFood = () => {
             }
           />
         </div>
-        <div className="flex items-center justify-center">
+        <div data-aos="fade-up" className="flex items-center justify-center">
           <div className="bg-white/80 w-full backdrop-blur-xl shadow-md rounded-3xl p-6 md:p-10 border border-gray-100 ">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid md:grid-cols-2 gap-8">
@@ -219,15 +219,15 @@ const AddFood = () => {
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
+            <div data-aos="zoom-in">
               <h4 className="text-4xl font-extrabold">1,245+</h4>
               <p className="text-sm opacity-90">Meals Shared</p>
             </div>
-            <div>
+            <div data-aos="zoom-in">
               <h4 className="text-4xl font-extrabold">870 kg</h4>
               <p className="text-sm opacity-90">Food Saved</p>
             </div>
-            <div>
+            <div data-aos="zoom-in">
               <h4 className="text-4xl font-extrabold">540+</h4>
               <p className="text-sm opacity-90">Happy Donors</p>
             </div>

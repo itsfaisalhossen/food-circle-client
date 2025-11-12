@@ -1,6 +1,12 @@
 import BtnPrimary from "./BtnPrimary";
 import Container from "./Container";
 import SectionTitle from "./SectionTitle";
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({
+  delay: 40,
+  duration: 800,
+});
 
 const OurMission = () => {
   return (
@@ -10,7 +16,7 @@ const OurMission = () => {
           <SectionTitle title1={"Our Mission"} />
           <div className="lg:flex lg:items-center lg:gap-12">
             {/* Left Side Image */}
-            <div className="lg:w-1/2 mb-10 lg:mb-0">
+            <div data-aos="zoom-in-right" className="lg:w-1/2 mb-10 lg:mb-0">
               <img
                 src="https://plus.unsplash.com/premium_photo-1733266905110-eab44e3aed74?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
                 alt="Food sharing community"
@@ -19,7 +25,7 @@ const OurMission = () => {
             </div>
 
             {/* Right Side Content */}
-            <div className="lg:w-1/2">
+            <div data-aos="zoom-in-left" className="lg:w-1/2">
               <h3 className="text-2xl sirin-stencil-regular font-semibold text-gray-800 mb-4">
                 Sharing Food, Spreading Kindness
               </h3>

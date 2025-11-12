@@ -1,5 +1,11 @@
 import BtnPrimary from "./BtnPrimary";
 import Container from "./Container";
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({
+  delay: 60,
+  duration: 1000,
+});
 
 const HeroBanner = () => {
   return (
@@ -8,7 +14,8 @@ const HeroBanner = () => {
         <section className="relative bg[#0f0f0f] text-white overflow-hidden">
           <div className="flex flex-col-reverse lg:flex-row items-center py-24 gap-12">
             {/* Left Content */}
-            <div className="w-full lg:w-1/2">
+
+            <div data-aos="fade-right" className="w-full lg:w-1/2">
               <p className="text-red-400 text-sm font-semibold mb-2">
                 Share & Save
               </p>
@@ -40,7 +47,10 @@ const HeroBanner = () => {
             </div>
 
             {/* Right Content (Image Area) */}
-            <div className="w-full lg:w-1/2 relative max-md:mt-10 flex justify-center">
+            <div
+              data-aos="zoom-in-left"
+              className="w-full lg:w-1/2 relative max-md:mt-10 flex justify-center"
+            >
               {/* Background circular badge */}
               <div className="absolute -bottom-10 -left-8 hidden md:block">
                 <img

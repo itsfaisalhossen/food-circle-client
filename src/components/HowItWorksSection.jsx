@@ -43,6 +43,7 @@ const HowItWorksSection = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {steps.map((step, index) => (
             <div
+              data-aos="zoom-in"
               key={index}
               className={`p-8 rounded-2xl ${step.bg} border border-gray-300 transition transform duration-300 hover:scale-[1] hover:shadow-md`}
             >

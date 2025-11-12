@@ -4,7 +4,6 @@ import {
   Blend,
   MailCheck,
   Barrel,
-  UserRoundMinus,
   Salad,
 } from "lucide-react";
 import Container from "../components/Container";
@@ -13,6 +12,13 @@ import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
+
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init({
+  delay: 40,
+  duration: 600,
+});
 
 const ManageMyFoods = () => {
   const { user } = useAuth();
@@ -86,13 +92,13 @@ const ManageMyFoods = () => {
         title2="Easily edit or remove your shared food items and track donation activity in one place."
       />
       <Container>
-        <div>
+        <div data-aos="fade-up">
           <h3 className="text-lg text-center font-semibold mb-4 text-red-500">
             Foods: {foods.length}
           </h3>
         </div>
 
-        <div className="flex flex-col mt-6">
+        <div data-aos="fade-up" className="flex flex-col mt-6">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200 md:rounded-lg">
