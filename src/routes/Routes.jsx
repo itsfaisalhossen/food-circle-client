@@ -24,7 +24,9 @@ export const router = createBrowserRouter([
         element: <AvailableFoods />,
       },
       {
-        path: "food-details",
+        path: "food/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/foods/${params.id}`),
         element: (
           <PrivetRoute>
             <FoodDetails />

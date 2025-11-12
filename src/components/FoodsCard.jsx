@@ -20,7 +20,7 @@ const FoodsCard = ({ food }) => {
         </div>
         <p className="text-lg">{aditionalNote}</p>
       </div>
-      <BtnPrimary link={_id} text={"View Details"} />
+      <BtnPrimary link={`/food/${_id}`} text={"View Details"} />
     </div>
   );
 };
