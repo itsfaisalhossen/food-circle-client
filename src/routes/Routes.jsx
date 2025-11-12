@@ -11,6 +11,7 @@ import FoodDetails from "../pages/FoodDetails";
 import MyFoodRequests from "../pages/MyFoodRequests";
 import AddFoods from "../pages/AddFoods";
 import PrivetRoute from "./PrivetRoute";
+import UpdateFood from "../pages/UpdateFood";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,16 @@ export const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <FoodDetails />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "update-food/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/foods/${params.id}`),
+        element: (
+          <PrivetRoute>
+            <UpdateFood />
           </PrivetRoute>
         ),
       },

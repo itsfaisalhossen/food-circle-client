@@ -12,7 +12,7 @@ const AddFood = () => {
     const foodUrl = e.target.foodUrl.value;
     const location = e.target.location.value;
     const date = e.target.date.value;
-    const foodQuantity = e.target.foodQuantity.value;
+    const foodQuantity = Number(e.target.foodQuantity.value);
     const status = e.target.status.value;
     const aditionalNote = e.target.aditionalNote.value;
     const donatorName = e.target.donatorName.value;
