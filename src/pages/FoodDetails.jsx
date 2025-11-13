@@ -3,8 +3,11 @@ import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import useAuth from "../hooks/useAuth";
+
 AOS.init({
   delay: 40,
   duration: 1000,
@@ -13,6 +16,9 @@ AOS.init({
 const FoodDetails = () => {
   const foodInf = useLoaderData();
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  console.log(user?.displayName);
+
   const {
     foodUrl,
     foodName,
@@ -27,8 +33,61 @@ const FoodDetails = () => {
     location,
   } = foodInf || {};
 
-  const handleFoodReq = () => {
+  const openFoodRequestModal = () => {
     setIsOpen(true);
+  };
+
+  const handleFoodReq = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const location = form.location.value;
+    const contactNo = form.contactNo.value;
+    const requestNote = form.requestNote.value;
+    const name = user?.displayName;
+    const email = user?.email;
+    const photo = user?.photoURL;
+    const foodId = _id;
+    const requestPepoleInfo = {
+      name,
+      email,
+      photo,
+    };
+
+    const newFoodReaquest = {
+      foodId,
+      status,
+      location,
+      contactNo,
+      requestNote,
+      requestPepoleInfo,
+    };
+    console.log(newFoodReaquest);
+
+    fetch("http://localhost:3000/foods-request", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(newFoodReaquest),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data is submite successful", data);
+        if (data.insertedId) {
+          toast.success("Food request submitted successfully! 🍱", {
+            style: {
+              border: "1px solid #713200",
+              padding: "16px",
+              color: "#713200",
+            },
+            iconTheme: {
+              primary: "#713200",
+              secondary: "#FFFAEE",
+            },
+          });
+        }
+        e.target.reset();
+      });
+
+    setIsOpen(false);
   };
 
   return (
@@ -44,12 +103,13 @@ const FoodDetails = () => {
           data-aos="fade-up"
           className="flex flex-col md:flex-row justify-between gap-10 items-center"
         >
+          {/* Food image and description */}
           <div className="flex-1 w-full">
             <div className="h-[380px] md:h-[560px]">
               <img
                 src={foodUrl}
                 className="w-full rounded-2xl h-full object-cover"
-                alt=""
+                alt={foodName}
               />
             </div>
             <div>
@@ -58,7 +118,9 @@ const FoodDetails = () => {
               <p className="mt-2">{aditionalNote}</p>
             </div>
           </div>
-          <div className="flex-1  space-y-8 w-full">
+
+          {/* Food info and donor section */}
+          <div className="flex-1 space-y-8 w-full">
             <div>
               <Link
                 to={"/available-foods"}
@@ -78,25 +140,28 @@ const FoodDetails = () => {
 
                 <div className="font-medium">
                   <p>Expire Date: {date}</p>
-                  <h4>Queantity: {foodQuantity}</h4>
+                  <h4>Quantity: {foodQuantity}</h4>
                 </div>
               </div>
             </div>
 
+            {/* Product details */}
             <div className="bg-gray-100 rounded-xl p-5">
               <h3 className="text-xl font-medium mb-4">Product Details</h3>
               <h4>Location: {location}</h4>
               <h4>Food ID: {_id}</h4>
             </div>
+
+            {/* Donor info */}
             <div className="bg-gray-100 rounded-xl p-5">
               <h3 className="text-xl font-medium mb-4">
-                Food Donate Information
+                Food Donator Information
               </h3>
               <div className="flex items-center gap-2.5">
                 <img
                   className="h-12 w-12 border-2 border-red-300 rounded-full object-cover"
                   src={donatorPhotoUrl}
-                  alt=""
+                  alt={donatorName}
                 />
                 <div>
                   <h4>{donatorName}</h4>
@@ -104,92 +169,71 @@ const FoodDetails = () => {
                 </div>
               </div>
             </div>
+
+            {/* Request food button */}
             <button
-              onClick={handleFoodReq}
-              className="px-4 md:px-8 py-3.5 lg:py-4 font-medium text-center rounded-xl bg-black  text-white hover:bg-red-500 transition-all duration-300 text-[14px] md:text-[15px] w-full cursor-pointer"
+              onClick={openFoodRequestModal}
+              className="px-4 md:px-8 py-3.5 lg:py-4 font-medium text-center rounded-xl bg-black text-white hover:bg-red-500 transition-all duration-300 text-[14px] md:text-[15px] w-full cursor-pointer"
             >
               Request Food
             </button>
           </div>
         </div>
-        <div className="relative flex justify-center">
-          {isOpen && (
-            <div
-              className="fixed inset-0 z-10 overflow-y-auto"
-              aria-labelledby="modal-title"
-              role="dialog"
-              aria-modal="true"
-            >
-              <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                <span
-                  className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                  aria-hidden="true"
-                >
-                  &#8203;
-                </span>
 
-                <div className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl rtl:text-right sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
-                  <div>
-                    <div className="flex items-center justify-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-8 h-8 text-gray-700"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
-                        />
-                      </svg>
-                    </div>
+        {isOpen && (
+          <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+            <div className="bg-white w-full max-w-md rounded-lg shadow-xl p-6 max-h-[90vh] overflow-y-auto">
+              <h3 className="text-center text-xl font-medium mb-4">
+                Request Food Assistance
+              </h3>
+              <p className="text-center text-sm text-gray-500 mb-4">
+                Provide location, contact, and reason for requesting food.
+              </p>
 
-                    <div className="mt-2 text-center">
-                      <h3
-                        className="text-lg font-medium leading-6 text-gray-800 capitalize"
-                        id="modal-title"
-                      >
-                        Archive Project
-                      </h3>
-                      <p className="mt-2 text-sm text-gray-500">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing
-                        elit. Aspernatur dolorum aliquam ea, ratione deleniti
-                        porro officia? Explicabo maiores suscipit.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-5 sm:flex sm:items-center sm:justify-between">
-                    <a
-                      href="#"
-                      className="text-sm text-blue-500 hover:underline"
-                    >
-                      Learn more
-                    </a>
-
-                    <div className="sm:flex sm:items-center">
-                      <button
-                        onClick={() => setIsOpen(false)}
-                        className="w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 rounded-md sm:mt-0 sm:w-auto sm:mx-2 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
-                      >
-                        Cancel
-                      </button>
-
-                      <button className="w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:w-auto sm:mt-0 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40">
-                        Archive
-                      </button>
-                    </div>
-                  </div>
+              <form onSubmit={handleFoodReq} className="space-y-4">
+                <input
+                  type="text"
+                  name="location"
+                  required
+                  placeholder="Location"
+                  className="focus:ring focus:ring-red-400 focus:border-transparent outline-none resize-none w-full px-4 py-3 border rounded-md"
+                />
+                <input
+                  type="number"
+                  name="contactNo"
+                  required
+                  placeholder="Contact No."
+                  className="focus:ring focus:ring-red-400 focus:border-transparent outline-none resize-none w-full px-4 py-3 border rounded-md"
+                />
+                <textarea
+                  name="requestNote"
+                  required
+                  rows={4}
+                  placeholder="Reason for food"
+                  className="focus:ring focus:ring-red-400 focus:border-transparent outline-none resize-none w-full px-4 py-3 border rounded-md"
+                />
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsOpen(false)}
+                    className="flex-1 cursor-pointer py-2 bg-gray-200 rounded-md"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 cursor-pointer py-2 bg-black text-white rounded-md"
+                  >
+                    Submit
+                  </button>
                 </div>
-              </div>
+              </form>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </Container>
     </div>
   );
 };
+
 export default FoodDetails;
