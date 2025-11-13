@@ -7,7 +7,9 @@ import OurMission from "../components/OurMission";
 import SafetySection from "../components/SafetySection";
 
 const fetchFoodsData = async () => {
-  const res = await fetch("http://localhost:3000/featured-foods");
+  const res = await fetch(
+    "https://foods-circle-api-server.vercel.app/featured-foods"
+  );
   return res.json();
 };
 

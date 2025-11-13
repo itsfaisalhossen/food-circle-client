@@ -28,7 +28,7 @@ const UpdateFood = () => {
       aditionalNote,
     };
 
-    fetch(`http://localhost:3000/foods/${foodInfo?._id}`, {
+    fetch(`https://foods-circle-api-server.vercel.app/foods/${foodInfo?._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedFood),

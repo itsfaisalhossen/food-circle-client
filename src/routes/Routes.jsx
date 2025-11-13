@@ -21,13 +21,15 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       {
         path: "available-foods",
-        loader: () => fetch("http://localhost:3000/foods"),
+        loader: () => fetch("https://foods-circle-api-server.vercel.app/foods"),
         element: <AvailableFoods />,
       },
       {
         path: "food/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/foods/${params.id}`),
+          fetch(
+            `https://foods-circle-api-server.vercel.app/foods/${params.id}`
+          ),
         element: (
           <PrivetRoute>
             <FoodDetails />
@@ -37,7 +39,9 @@ export const router = createBrowserRouter([
       {
         path: "update-food/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/foods/${params.id}`),
+          fetch(
+            `https://foods-circle-api-server.vercel.app/foods/${params.id}`
+          ),
         element: (
           <PrivetRoute>
             <UpdateFood />

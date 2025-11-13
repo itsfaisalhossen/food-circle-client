@@ -35,7 +35,7 @@ const FoodDetails = () => {
   } = foodInf || {};
 
   useEffect(() => {
-    fetch(`http://localhost:3000/foods-requests/${_id}`)
+    fetch(`https://foods-circle-api-server.vercel.app/foods-requests/${_id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Request for this food");
@@ -69,7 +69,7 @@ const FoodDetails = () => {
       requestPepoleInfo,
     };
 
-    fetch("http://localhost:3000/foods-request", {
+    fetch("https://foods-circle-api-server.vercel.app/foods-request", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(newFoodReaquest),
@@ -102,7 +102,7 @@ const FoodDetails = () => {
   const handleStatusUpdate = async (id, newStatus) => {
     try {
       const res = await fetch(
-        `http://localhost:3000/foods-request/${id}/status`,
+        `https://foods-circle-api-server.vercel.app/foods-request/${id}/status`,
         {
           method: "PATCH",
           headers: {

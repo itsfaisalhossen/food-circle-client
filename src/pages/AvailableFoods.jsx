@@ -9,7 +9,7 @@ const AvailableFoods = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:3000/foods")
+    fetch("https://foods-circle-api-server.vercel.app/foods")
       .then((res) => res.json())
       .then((data) => {
         setAvailableFoods(data);

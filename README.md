@@ -1,23 +1,23 @@
-# 🦸‍♂️ FoodCircle — Community Food Sharing
+# 🍲 FoodCircle — Community Food Sharing
 
 ### Live Site: food-circle-8fa57.web.app
 
 ## Project Snapshot
 
-PlateShare is a full-stack MERN application to reduce food waste by connecting people who want to donate surplus food with those who need it. Donators post food items and others browse, request, and receive food. The app includes authentication (Firebase), CRUD for foods (MongoDB), image hosting via imgbb, and a food request workflow for owners to accept/reject requests.
+FoodCircle is a full-stack MERN application to reduce food waste by connecting people who want to donate surplus food with those who need it. Donators post food items and others browse, request, and receive food. The app includes authentication (Firebase), CRUD for foods (MongoDB), image hosting via imgbb, and a food request workflow for owners to accept/reject requests.
 
 ## 🚀 Features
 
 - 🔐 **Firebase authentication** – Secure user sign-in and registration (Email/Password + Google social login).
 - ⚡ **Frontend Features** – Search, sorting, private routing, localStorage state, and smooth dynamic SPA experience.
 - 🍲 **Food Management System (CRUD)** – Add, update, delete, and view foods with real-time MongoDB integration.
-- 🤝 ** Food Request System** – Users can request food; owners can accept or reject requests dynamically.
-- 🧩 ** Fast & Interactive UI** – Modular structure for easy scalability and maintenance
-- 🔁 ** Reusable Components** – Styled using Tailwind CSS for pixel-perfect layouts across all devices
-- 🔁 ** Homepage Animations** –Smooth scroll and entry animations using AOS.
+- 🤝 **Food Request System** – Users can request food; owners can accept or reject requests dynamically.
+- 🧩 **Fast & Interactive UI** – Modular structure for easy scalability and maintenance
+- 🔁 **Reusable Components** – Styled using Tailwind CSS for pixel-perfect layouts across all devices
+- 🔁 **Homepage Animations** –Smooth scroll and entry animations using AOS.
 - 🎨 **Responsive Design** – Styled using Tailwind CSS for pixel-perfect layouts across all devices
 - 🔔 **SweetAlert Notifications** – Seamless user feedback powered by SweetAlert
-- 🚀 ** Deployed with Modern Stack** – Client on Netlify/Vercel and server on Render/Railway with MongoDB Atlas.
+- 🚀 **Deployed with Modern Stack** – Client on Netlify/Vercel and server on Render/Railway with MongoDB Atlas.
 
 ---
 

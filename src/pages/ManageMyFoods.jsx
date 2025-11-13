@@ -28,7 +28,9 @@ const ManageMyFoods = () => {
   useEffect(() => {
     if (user?.email) {
       setLoading(true);
-      fetch(`http://localhost:3000/foods?email=${user.email}`)
+      fetch(
+        `https://foods-circle-api-server.vercel.app/foods?email=${user.email}`
+      )
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -53,7 +55,7 @@ const ManageMyFoods = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         console.log("now delete", _id);
-        fetch(`http://localhost:3000/foods/${_id}`, {
+        fetch(`https://foods-circle-api-server.vercel.app/foods/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

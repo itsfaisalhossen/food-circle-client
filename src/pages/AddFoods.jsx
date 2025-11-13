@@ -31,7 +31,7 @@ const AddFood = () => {
       donatorPhotoUrl,
     };
 
-    fetch("http://localhost:3000/foods", {
+    fetch("https://foods-circle-api-server.vercel.app/foods", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(newFoods),
