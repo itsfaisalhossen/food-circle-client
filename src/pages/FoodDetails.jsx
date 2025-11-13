@@ -1,8 +1,16 @@
+import {
+  Trash2,
+  SquarePen,
+  Blend,
+  ArrowLeft,
+  BookCopy,
+  MapPin,
+  Phone,
+} from "lucide-react";
 import { Link, useLoaderData } from "react-router";
 import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
-import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -17,7 +25,8 @@ const FoodDetails = () => {
   const foodInf = useLoaderData();
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
-  console.log(user?.displayName);
+  const [requestFoods, setRequestFoods] = useState([]);
+  console.log(requestFoods);
 
   const {
     foodUrl,
@@ -28,10 +37,19 @@ const FoodDetails = () => {
     donatorName,
     donatorEmail,
     donatorPhotoUrl,
-    status,
     date,
     location,
+    status,
   } = foodInf || {};
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/foods-requests/${_id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Request for this food");
+        setRequestFoods(data);
+      });
+  }, [_id]);
 
   const openFoodRequestModal = () => {
     setIsOpen(true);
@@ -47,11 +65,8 @@ const FoodDetails = () => {
     const email = user?.email;
     const photo = user?.photoURL;
     const foodId = _id;
-    const requestPepoleInfo = {
-      name,
-      email,
-      photo,
-    };
+    const status = "Pending";
+    const requestPepoleInfo = { name, email, photo };
 
     const newFoodReaquest = {
       foodId,
@@ -61,7 +76,6 @@ const FoodDetails = () => {
       requestNote,
       requestPepoleInfo,
     };
-    console.log(newFoodReaquest);
 
     fetch("http://localhost:3000/foods-request", {
       method: "POST",
@@ -70,7 +84,6 @@ const FoodDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("data is submite successful", data);
         if (data.insertedId) {
           toast.success("Food request submitted successfully! 🍱", {
             style: {
@@ -83,6 +96,9 @@ const FoodDetails = () => {
               secondary: "#FFFAEE",
             },
           });
+          newFoodReaquest._id = data.insertedId;
+          const newFoods = [...requestFoods, newFoodReaquest];
+          setRequestFoods(newFoods);
         }
         e.target.reset();
       });
@@ -99,6 +115,7 @@ const FoodDetails = () => {
             "Explore complete food details, including ingredients, quantity, location, donor info, and pickup availability for requests."
           }
         />
+
         <div
           data-aos="fade-up"
           className="flex flex-col md:flex-row justify-between gap-10 items-center"
@@ -134,7 +151,7 @@ const FoodDetails = () => {
                     {foodName}
                   </h2>
                   <p className="p-1 bg-red-50 w-[100px] text-center rounded-2xl">
-                    {status}
+                    {status || "Available"}
                   </p>
                 </div>
 
@@ -170,16 +187,19 @@ const FoodDetails = () => {
               </div>
             </div>
 
-            {/* Request food button */}
-            <button
-              onClick={openFoodRequestModal}
-              className="px-4 md:px-8 py-3.5 lg:py-4 font-medium text-center rounded-xl bg-black text-white hover:bg-red-500 transition-all duration-300 text-[14px] md:text-[15px] w-full cursor-pointer"
-            >
-              Request Food
-            </button>
+            {/* Request food button — only for non-owners */}
+            {user?.email !== donatorEmail && (
+              <button
+                onClick={openFoodRequestModal}
+                className="px-4 md:px-8 py-3.5 lg:py-4 font-medium text-center rounded-xl bg-black text-white hover:bg-red-500 transition-all duration-300 text-[14px] md:text-[15px] w-full cursor-pointer"
+              >
+                Request Food
+              </button>
+            )}
           </div>
         </div>
 
+        {/* Food Request Modal */}
         {isOpen && (
           <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/30 backdrop-blur-sm">
             <div className="bg-white w-full max-w-md rounded-lg shadow-xl p-6 max-h-[90vh] overflow-y-auto">
@@ -228,6 +248,125 @@ const FoodDetails = () => {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+
+        {/* Food request table — only visible to the food owner */}
+        {user?.email === donatorEmail && (
+          <div className="mt-20">
+            <h3 className="text-3xl md:text-5xl font-semibold sirin-stencil-regular ">
+              Request For This Food:{" "}
+              <span className="text-red-500">{requestFoods.length}</span>
+            </h3>
+
+            <div className="-mx-4 -my-2 mt-8 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <div className="overflow-hidden border border-gray-200 md:rounded-lg">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="py-3.5 px-4 text-sm font-semibold text-left text-gray-800">
+                          <div className="flex items-center gap-x-3 ml-8">
+                            <BookCopy size={16} />
+                            <span>Info</span>
+                          </div>
+                        </th>
+
+                        <th className="px-12 py-3.5 text-sm font-semibold text-left text-gray-800">
+                          <div className="flex items-center gap-x-2">
+                            <Blend size={16} />
+                            <span>Status</span>
+                          </div>
+                        </th>
+
+                        <th className="px-4 py-3.5 text-sm font-semibold text-left text-gray-800">
+                          <div className="flex items-center gap-x-2">
+                            <MapPin size={16} />
+                            <span>Location</span>
+                          </div>
+                        </th>
+
+                        <th className="px-4 py-3.5 text-sm font-semibold text-left text-gray-800">
+                          <div className="flex items-center gap-x-2">
+                            <Phone size={16} />
+                            <span>Contact No</span>
+                          </div>
+                        </th>
+
+                        <th className="px-4 py-3.5 text-sm font-semibold text-left text-gray-800">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {requestFoods.map((food, index) => (
+                        <tr key={food?._id || index}>
+                          <td className="px-4 md:px-8 py-4 md:py-6 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <div className="inline-flex items-center gap-x-3">
+                              <p className="font-bold mr-2">{index + 1}</p>
+                              <div className="flex items-center gap-x-2">
+                                <div className="h-[50px] w-[50px]">
+                                  <img
+                                    className="object-cover w-full h-full rounded-xl"
+                                    src={
+                                      food?.requestPepoleInfo?.photo ||
+                                      "https://via.placeholder.com/40"
+                                    }
+                                    alt={
+                                      food?.requestPepoleInfo?.name || "Donator"
+                                    }
+                                  />
+                                </div>
+                                <div>
+                                  <p>{food?.requestPepoleInfo?.name}</p>
+                                  <p>{food?.requestPepoleInfo?.email}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+
+                          <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
+                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                              <h2 className="text-sm font-normal text-emerald-700">
+                                {food.status || "Pending"}
+                              </h2>
+                            </div>
+                          </td>
+
+                          <td className="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                            {food.location || "Unnamed"}
+                          </td>
+
+                          <td className="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                            {food.contactNo || "N/A"}
+                          </td>
+
+                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+                            <div className="flex items-center gap-x-6">
+                              <button
+                                className="text-gray-500 cursor-pointer transition-colors duration-200 hover:text-red-500 focus:outline-none"
+                                title="Delete"
+                              >
+                                <Trash2 />
+                              </button>
+
+                              <button
+                                className="text-gray-500 cursor-pointer transition-colors duration-200 hover:text-yellow-500 focus:outline-none"
+                                title="Edit"
+                              >
+                                <SquarePen />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         )}
