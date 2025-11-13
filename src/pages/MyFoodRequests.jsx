@@ -1,55 +1,8 @@
-// import { useState } from "react";
-// import { useEffect } from "react";
-// import useAuth from "../hooks/useAuth";
-// import Container from "../components/Container";
-
-// const MyFoodRequests = () => {
-//   const { user } = useAuth();
-//   const [foods, setFoods] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   console.log(foods);
-
-//   useEffect(() => {
-//     if (user?.email) {
-//       setLoading(true);
-//       fetch(` /foods-request?email=${user?.email}`)
-//         .then((res) => res.json())
-//         .then((data) => {
-//           console.log(data);
-//           setFoods(data);
-//         })
-//         .catch((err) => console.error("Error fetching foods:", err))
-//         .finally(() => {
-//           setLoading(false);
-//         });
-//     }
-//   }, [user?.email]);
-
-//   if (loading) {
-//     return (
-//       <Container>
-//         <div className="text-center py-34">
-//           <div className="animate-spin rounded-full h-14 w-14 border-b-4 border-red-700 mx-auto"></div>
-//         </div>
-//       </Container>
-//     );
-//   }
-//   return (
-//     <div className="my-14 md:my-24 ">
-//       <Container>MyFoodRequests</Container>
-//     </div>
-//   );
-// };
-// export default MyFoodRequests;
-
-import { Blend, ArrowLeft, BookCopy, MapPin, Phone } from "lucide-react";
-
+import { Blend, BookCopy, MapPin, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
-import LoadingSpinner from "../components/LoadingSpinner"; // optional, if you have a spinner component
-// import toast from "react-hot-toast";
 
 const MyFoodRequests = () => {
   const { user } = useAuth();
@@ -77,8 +30,8 @@ const MyFoodRequests = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <LoadingSpinner /> {/* or just "Loading..." */}
+      <div className="text-center py-34">
+        <div className="animate-spin rounded-full h-14 w-14 border-b-4 border-red-700 mx-auto"></div>
       </div>
     );
   }
@@ -123,70 +76,80 @@ const MyFoodRequests = () => {
                       </th>
                     </tr>
                   </thead>
-
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {foods.map((food, index) => (
-                      <tr key={food?._id || index}>
-                        <td className="px-4 md:px-8 py-4 md:py-6 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-x-3">
-                            <p className="font-bold mr-2">{index + 1}</p>
-                            <div className="flex items-center gap-x-2">
-                              <div className="h-[50px] w-[50px]">
-                                <img
-                                  className="object-cover w-full h-full rounded-xl"
-                                  src={
-                                    food?.requestPepoleInfo?.photo ||
-                                    "https://via.placeholder.com/40"
-                                  }
-                                  alt={
-                                    food?.requestPepoleInfo?.name || "Donator"
-                                  }
-                                />
-                              </div>
-                              <div>
-                                <p>{food?.requestPepoleInfo?.name}</p>
-                                <p className="text-gray-500 text-sm">
-                                  {food?.requestPepoleInfo?.email}
-                                </p>
+                    {foods.length > 0 ? (
+                      foods.map((food, index) => (
+                        <tr key={food?._id || index}>
+                          <td className="px-4 md:px-8 py-4 md:py-6 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <div className="inline-flex items-center gap-x-3">
+                              <p className="font-bold mr-2">{index + 1}</p>
+                              <div className="flex items-center gap-x-2">
+                                <div className="h-[50px] w-[50px]">
+                                  <img
+                                    className="object-cover w-full h-full rounded-xl"
+                                    src={
+                                      food?.requestPepoleInfo?.photo ||
+                                      "https://via.placeholder.com/40"
+                                    }
+                                    alt={
+                                      food?.requestPepoleInfo?.name || "Donator"
+                                    }
+                                  />
+                                </div>
+                                <div>
+                                  <p>{food?.requestPepoleInfo?.name}</p>
+                                  <p className="text-gray-500 text-sm">
+                                    {food?.requestPepoleInfo?.email}
+                                  </p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </td>
+                          </td>
 
-                        <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div
-                            className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
-                              food.status === "Approved"
-                                ? "bg-green-100/60"
-                                : food.status === "Rejected"
-                                ? "bg-red-100/60"
-                                : "bg-yellow-100/60"
-                            }`}
-                          >
-                            <span
-                              className={`h-1.5 w-1.5 rounded-full ${
+                          <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <div
+                              className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
                                 food.status === "Approved"
-                                  ? "bg-green-500"
+                                  ? "bg-green-100/60"
                                   : food.status === "Rejected"
-                                  ? "bg-red-500"
-                                  : "bg-yellow-500"
+                                  ? "bg-red-100/60"
+                                  : "bg-yellow-100/60"
                               }`}
-                            ></span>
-                            <h2 className="text-sm font-normal">
-                              {food.status || "Pending"}
-                            </h2>
-                          </div>
-                        </td>
+                            >
+                              <span
+                                className={`h-1.5 w-1.5 rounded-full ${
+                                  food.status === "Approved"
+                                    ? "bg-green-500"
+                                    : food.status === "Rejected"
+                                    ? "bg-red-500"
+                                    : "bg-yellow-500"
+                                }`}
+                              ></span>
+                              <h2 className="text-sm font-normal">
+                                {food.status || "Pending"}
+                              </h2>
+                            </div>
+                          </td>
 
-                        <td className="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          {food.location || "Unnamed"}
-                        </td>
+                          <td className="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                            {food.location || "Unnamed"}
+                          </td>
 
-                        <td className="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          {food.contactNo || "N/A"}
+                          <td className="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                            {food.contactNo || "N/A"}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan={4}
+                          className="px-4 py-4 text-center text-gray-500 text-xl"
+                        >
+                          No food requests found.
                         </td>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
                 </table>
               </div>
