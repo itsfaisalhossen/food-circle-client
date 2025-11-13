@@ -1,12 +1,4 @@
-import {
-  Trash2,
-  SquarePen,
-  Blend,
-  ArrowLeft,
-  BookCopy,
-  MapPin,
-  Phone,
-} from "lucide-react";
+import { Blend, ArrowLeft, BookCopy, MapPin, Phone } from "lucide-react";
 import { Link, useLoaderData } from "react-router";
 import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
@@ -104,6 +96,40 @@ const FoodDetails = () => {
       });
 
     setIsOpen(false);
+  };
+
+  // 🔹 Handle status update (Accept / Reject)
+  const handleStatusUpdate = async (id, newStatus) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/foods-request/${id}/status`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: newStatus }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success(`Request ${newStatus}!`);
+
+        // 🔹 Update local state instantly
+        setRequestFoods((prev) =>
+          prev.map((food) =>
+            food._id === id ? { ...food, status: newStatus } : food
+          )
+        );
+      } else {
+        toast.error(data.message || "Failed to update status");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong!");
+    }
   };
 
   return (
@@ -252,7 +278,6 @@ const FoodDetails = () => {
           </div>
         )}
 
-        {/* Food request table — only visible to the food owner */}
         {user?.email === donatorEmail && (
           <div className="mt-20">
             <h3 className="text-3xl md:text-5xl font-semibold sirin-stencil-regular ">
@@ -321,16 +346,34 @@ const FoodDetails = () => {
                                 </div>
                                 <div>
                                   <p>{food?.requestPepoleInfo?.name}</p>
-                                  <p>{food?.requestPepoleInfo?.email}</p>
+                                  <p className="text-gray-500 text-sm">
+                                    {food?.requestPepoleInfo?.email}
+                                  </p>
                                 </div>
                               </div>
                             </div>
                           </td>
 
                           <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
-                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                              <h2 className="text-sm font-normal text-emerald-700">
+                            <div
+                              className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
+                                food.status === "Approved"
+                                  ? "bg-green-100/60"
+                                  : food.status === "Rejected"
+                                  ? "bg-red-100/60"
+                                  : "bg-yellow-100/60"
+                              }`}
+                            >
+                              <span
+                                className={`h-1.5 w-1.5 rounded-full ${
+                                  food.status === "Approved"
+                                    ? "bg-green-500"
+                                    : food.status === "Rejected"
+                                    ? "bg-red-500"
+                                    : "bg-yellow-500"
+                                }`}
+                              ></span>
+                              <h2 className="text-sm font-normal">
                                 {food.status || "Pending"}
                               </h2>
                             </div>
@@ -347,17 +390,33 @@ const FoodDetails = () => {
                           <td className="px-4 py-4 text-sm whitespace-nowrap">
                             <div className="flex items-center gap-x-6">
                               <button
-                                className="text-gray-500 cursor-pointer transition-colors duration-200 hover:text-red-500 focus:outline-none"
-                                title="Delete"
+                                onClick={() =>
+                                  handleStatusUpdate(food._id, "Approved")
+                                }
+                                disabled={food.status === "Approved"}
+                                className={`transition-colors duration-200 focus:outline-none ${
+                                  food.status === "Approved"
+                                    ? "text-green-400 cursor-not-allowed"
+                                    : "text-gray-500 hover:text-green-500"
+                                }`}
+                                title="Accept Request"
                               >
-                                <Trash2 />
+                                Accept
                               </button>
 
                               <button
-                                className="text-gray-500 cursor-pointer transition-colors duration-200 hover:text-yellow-500 focus:outline-none"
-                                title="Edit"
+                                onClick={() =>
+                                  handleStatusUpdate(food._id, "Rejected")
+                                }
+                                disabled={food.status === "Rejected"}
+                                className={`transition-colors duration-200 focus:outline-none ${
+                                  food.status === "Rejected"
+                                    ? "text-red-400 cursor-not-allowed"
+                                    : "text-gray-500 hover:text-red-500"
+                                }`}
+                                title="Reject Request"
                               >
-                                <SquarePen />
+                                Reject
                               </button>
                             </div>
                           </td>
