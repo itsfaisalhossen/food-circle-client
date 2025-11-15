@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
+import { Helmet } from "react-helmet";
 
 const MyFoodRequests = () => {
   const { user } = useAuth();
@@ -38,6 +39,9 @@ const MyFoodRequests = () => {
 
   return (
     <div className="my-14 md:my-24">
+      <Helmet>
+        <title>FoodCircle | My Food Request</title>
+      </Helmet>
       <Container>
         <SectionTitle title1="My Food Requests 🍽️" />
         <div data-aos="fade-up" className="flex flex-col mt-6">

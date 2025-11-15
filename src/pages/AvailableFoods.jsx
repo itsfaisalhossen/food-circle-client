@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
 import FoodsCard from "../components/FoodsCard";
+import { Helmet } from "react-helmet";
 
 const AvailableFoods = () => {
   const [availableFoods, setAvailableFoods] = useState([]);
@@ -32,6 +33,9 @@ const AvailableFoods = () => {
 
   return (
     <div className="my-14 md:my-24 ">
+      <Helmet>
+        <title>FoodCircle | Available Foods</title>
+      </Helmet>
       <Container>
         <SectionTitle
           title1={"Available Foods 🍲"}

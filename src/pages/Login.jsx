@@ -4,8 +4,7 @@ import Container from "../components/Container";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
-import { UtensilsCrossed } from "lucide-react";
-import SectionTitle from "../components/SectionTitle";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const location = useLocation();
@@ -105,16 +104,21 @@ const Login = () => {
 
   return (
     <div className=" my-14 md:my-24">
+      <Helmet>
+        <title>FoodCircle | Login</title>
+      </Helmet>
       <Container>
-        <SectionTitle title1={"Sign in to FoodCircle"} />
         <div className="w-full max-w-[660px] p-6 md:p-10 m-auto bg-white rounded-lg shadow-md">
           {/* Form */}
+          <h3 className="sirin-stencil-regular mb-6 font-bold text-5xl text-center">
+            Sign in to FoodCircle
+          </h3>
           <form onSubmit={handleSignin}>
             {/* Username */}
             <div>
               <label
                 htmlFor="username"
-                className="block text-sm text-gray-800 dark:text-gray-200"
+                className="block font-medium text-gray-800 dark:text-gray-200"
               >
                 Email
               </label>
@@ -132,17 +136,10 @@ const Login = () => {
             {/* Password */}
             <div className="mt-4">
               <div className="flex items-center justify-between">
-                <label className="block text-sm text-gray-800 dark:text-gray-200">
+                <label className="block font-medium text-gray-800 dark:text-gray-200">
                   Password
                 </label>
-                {/* <a
-              href="#"
-              className="text-xs text-gray-600 dark:text-gray-400 hover:underline"
-            >
-              Forget Password?
-            </a> */}
               </div>
-
               <input
                 required
                 // type={show ? "text" : "password"}
@@ -151,12 +148,18 @@ const Login = () => {
                 placeholder="Password"
                 className="block w-full px-4 md:px-6 py-2 md:py-3 mt-2 text-gray-700 bg-white border rounded-xl dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-red-400 dark:focus:border-red-300 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
+              <Link
+                to={""}
+                className="block font-medium text-gray-800 dark:text-gray-200 mt-4"
+              >
+                Forget Password?
+              </Link>
             </div>
 
             {/* Sign In Button */}
-            <div className="mt-6">
+            <div className="mt-5">
               <input
-                className="px-4 w-full cursor-pointer md:px-8  py-2 md:py-3 rounded-xl bg-red-500 text-white  hover:bg-red-600 transition-all duration-300"
+                className="px-4 w-full cursor-pointer md:px-8  py-2 md:py-3 rounded-xl bg-red-500 text-white font-medium md:text-lg hover:bg-red-600 transition-all duration-300"
                 type="submit"
                 value="Sign In"
               />
@@ -167,7 +170,7 @@ const Login = () => {
           <div className="flex items-center justify-between mt-4">
             <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/5"></span>
 
-            <p className="text-xs text-center text-gray-500 uppercase dark:text-gray-400 hover:underline">
+            <p className="text-sm text-center text-gray-800 uppercase dark:text-gray-400 hover:underline">
               Or Sign in With
             </p>
 
@@ -190,7 +193,7 @@ const Login = () => {
           </div>
 
           {/* Create Account */}
-          <p className="mt-8 text-sm font-light text-center text-gray-700">
+          <p className="mt-8 text-sm font-normal text-center text-gray-700">
             Don&apos;t have an account?{" "}
             <Link
               state={location?.state}

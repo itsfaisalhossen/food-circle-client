@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router";
 import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const UpdateFood = () => {
   const foodInfo = useLoaderData();
@@ -63,6 +64,9 @@ const UpdateFood = () => {
 
   return (
     <div className="my-14 md:my-24">
+      <Helmet>
+        <title>FoodCircle | Updated Food</title>
+      </Helmet>
       <Container>
         <SectionTitle
           title1="Update Your Food"

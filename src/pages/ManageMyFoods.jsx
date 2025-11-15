@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
+import { Helmet } from "react-helmet";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -89,6 +90,9 @@ const ManageMyFoods = () => {
 
   return (
     <div className="my-14 md:my-24">
+      <Helmet>
+        <title>FoodCircle | Manage Foods</title>
+      </Helmet>
       <SectionTitle
         title1="Manage My Foods"
         title2="Easily edit or remove your shared food items and track donation activity in one place."

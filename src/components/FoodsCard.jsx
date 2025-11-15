@@ -7,17 +7,8 @@ AOS.init({
 });
 
 const FoodsCard = ({ food }) => {
-  const {
-    _id,
-    foodName,
-    foodUrl,
-    foodQuantity,
-    location,
-    date,
-    status,
-    donatorName,
-    donatorPhotoUrl,
-  } = food;
+  const { _id, foodName, foodUrl, foodQuantity, status } = food;
+  console.log(food);
 
   return (
     <div
@@ -31,34 +22,17 @@ const FoodsCard = ({ food }) => {
           alt=""
         />
       </div>
-      <div className="space-y-6 mt-3">
-        <div className="flex items-center justify-between font-medium">
-          <div>
-            <h2 className="sirin-stencil-regular font-bold text-xl md:text-2xl">
-              {foodName}
-            </h2>
-            <p className="text-xs mt-2">{status}</p>
-          </div>
-          <div className="text-sm">
-            <p>Expire Date: {date}</p>
-            <h3>Quantity:{foodQuantity}</h3>
-          </div>
-        </div>
-        <div>
-          <div className="mt-2 font-medium">
-            <p>Pickup location: {location}</p>
-          </div>
-          <div className="mt-3">
-            <h4 className="text-sm font-medium">Donator Info</h4>
-            <div className="mt-2 flex items-center gap-2">
-              <img
-                className="h-10 w-10 object-cover rounded-md"
-                src={donatorPhotoUrl}
-                alt=""
-              />
-              <p className="text-xs">{donatorName}</p>
-            </div>
-          </div>
+      <div className="my-3 md:my-4">
+        <p className="px-1 py-1 text-sm rounded-md font-medium bg-white mb-2 w-[90px] text-center">
+          {status}
+        </p>
+        <div className="flex items-center justify-between mt-4">
+          <h2 className="sirin-stencil-regular font-bold text-xl md:text-2xl">
+            {foodName}
+          </h2>
+          <h3 className="sirin-stencil-regular font-bold text-lg">
+            Quantity : {foodQuantity}
+          </h3>
         </div>
       </div>
       <BtnPrimary link={`/food/${_id}`} text={"View Details"} />

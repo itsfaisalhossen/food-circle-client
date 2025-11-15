@@ -4,8 +4,7 @@ import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
-import { UtensilsCrossed } from "lucide-react";
-import SectionTitle from "../components/SectionTitle";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const location = useLocation();
@@ -134,14 +133,19 @@ const Register = () => {
 
   return (
     <div className="my-14 md:my-24">
-      <SectionTitle title1={"Sign up to FoodCircle"} />
+      <Helmet>
+        <title>FoodCircle | Register</title>
+      </Helmet>
       <Container>
         <div className="w-full max-w-[660px] p-6 md:p-10 m-auto bg-white rounded-lg shadow-md">
           {/* Form */}
           <form onSubmit={handleRegister}>
+            <h3 className="sirin-stencil-regular mb-6 font-bold text-5xl text-center">
+              Sign in to FoodCircle
+            </h3>
             {/* Username */}
             <div>
-              <label className="block text-sm text-gray-800 dark:text-gray-200">
+              <label className="block text-sm font-medium text-gray-800 dark:text-gray-200">
                 Name
               </label>
               <input
@@ -155,7 +159,7 @@ const Register = () => {
             {/* Photo */}
             <div className="mt-4">
               <div className="flex items-center justify-between">
-                <label className="block text-sm text-gray-800 dark:text-gray-200">
+                <label className="block text-sm font-medium text-gray-800 dark:text-gray-200">
                   Photo
                 </label>
               </div>
@@ -172,7 +176,7 @@ const Register = () => {
             {/* Password */}
             <div className="mt-4">
               <div className="flex items-center justify-between">
-                <label className="block text-sm text-gray-800 dark:text-gray-200">
+                <label className="block text-sm font-medium text-gray-800 dark:text-gray-200">
                   Email
                 </label>
               </div>
@@ -189,7 +193,7 @@ const Register = () => {
             {/* Password */}
             <div className="mt-4">
               <div className="flex items-center justify-between">
-                <label className="block text-sm text-gray-800 dark:text-gray-200">
+                <label className="block text-sm font-medium text-gray-800 dark:text-gray-200">
                   Password
                 </label>
               </div>
@@ -206,7 +210,7 @@ const Register = () => {
             {/* Sign In Button */}
             <div className="mt-6">
               <input
-                className="px-4 w-full cursor-pointer md:px-6  py-2 md:py-3 rounded-xl bg-red-500 text-white  hover:bg-red-600 transition-all duration-300"
+                className="px-4 w-full cursor-pointer md:px-6  py-2 md:py-3 rounded-xl bg-red-500 text-white md:text-lg font-medium hover:bg-red-600 transition-all duration-300"
                 type="submit"
                 value="Sign In"
               />
@@ -217,7 +221,7 @@ const Register = () => {
           <div className="flex items-center justify-between mt-4">
             <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/5"></span>
 
-            <p className="text-xs text-center text-gray-500 uppercase dark:text-gray-400 hover:underline">
+            <p className="text-sm text-center text-gray-500 uppercase dark:text-gray-400 hover:underline">
               Or Sign in With
             </p>
 
@@ -238,7 +242,7 @@ const Register = () => {
           </div>
 
           {/* Create Account */}
-          <p className="mt-8 text-sm font-light text-center text-gray-700">
+          <p className="mt-8 text-sm font-normal text-center text-gray-700">
             Already have an account?{" "}
             <Link
               to={"/auth/login"}

@@ -5,6 +5,7 @@ import HowItWorksSection from "../components/HowItWorksSection";
 import NewsletterCTASection from "../components/NewsletterCTASection";
 import OurMission from "../components/OurMission";
 import SafetySection from "../components/SafetySection";
+import { Helmet } from "react-helmet";
 
 const fetchFoodsData = async () => {
   const res = await fetch(
@@ -25,6 +26,9 @@ const Home = () => {
   }, []);
   return (
     <div className="space-y-12 md:space-y-24">
+      <Helmet>
+        <title>FoodCircle | Home</title>
+      </Helmet>
       <HeroBanner />
       <FeaturedFoods foodItem={foodItem} />
       <HowItWorksSection />

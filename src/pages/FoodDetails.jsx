@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import useAuth from "../hooks/useAuth";
+import { Helmet } from "react-helmet";
 
 AOS.init({
   delay: 40,
@@ -134,6 +135,9 @@ const FoodDetails = () => {
 
   return (
     <div className="my-14 md:my-24">
+      <Helmet>
+        <title>FoodCircle | Food Details</title>
+      </Helmet>
       <Container>
         <SectionTitle
           title1={"Food Details"}

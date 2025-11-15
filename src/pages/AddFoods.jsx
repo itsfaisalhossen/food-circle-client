@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
 import useAuth from "../hooks/useAuth";
+import { Helmet } from "react-helmet";
 
 const AddFood = () => {
   const { user } = useAuth();
@@ -58,6 +59,9 @@ const AddFood = () => {
 
   return (
     <div className="my-14 md:my-24 ">
+      <Helmet>
+        <title>FoodCircle | Add Food</title>
+      </Helmet>
       <Container>
         <div className="text-center mb-10">
           <SectionTitle

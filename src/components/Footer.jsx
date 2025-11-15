@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import BtnPrimary from "./BtnPrimary";
 import Container from "./Container";
 import {
   Facebook,
@@ -42,25 +41,25 @@ const Footer = () => {
             <p className="font-semibold text-white dark:text-white">
               Quick Link
             </p>
-            <div className="flex flex-col items-start mt-5 space-y-2">
-              <a
-                href="#"
+            <div className="flex flex-col items-start mt-5 space-y-2 md:space-y-5">
+              <Link
+                to={""}
                 className=" text-white text-sm transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
               >
                 Home
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to={""}
                 className=" text-white text-sm transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
               >
                 Who We Are
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to={""}
                 className=" text-white text-sm transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
               >
                 Our Philosophy
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -69,25 +68,25 @@ const Footer = () => {
             <p className="font-semibold text-white dark:text-white">
               Industries
             </p>
-            <div className="flex flex-col items-start mt-5 space-y-2">
-              <a
-                href="#"
+            <div className="flex flex-col items-start mt-5 space-y-2 md:space-y-5">
+              <Link
+                to={""}
                 className=" text-white text-sm transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
               >
                 Retail &amp; E-Commerce
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to={""}
                 className=" text-white text-sm transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
               >
                 Information Technology
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to={""}
                 className=" text-white text-sm transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"
               >
                 Finance &amp; Insurance
-              </a>
+              </Link>
             </div>
           </div>
         </div>

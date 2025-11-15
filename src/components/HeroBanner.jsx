@@ -9,12 +9,11 @@ AOS.init({
 
 const HeroBanner = () => {
   return (
-    <div className="mt-14 md:mt-20">
+    <div className="py-14 md:py-24 bg-red-50">
       <Container>
         <section className="relative bg[#0f0f0f] text-white overflow-hidden">
-          <div className="flex flex-col-reverse lg:flex-row items-center py-24 gap-12">
+          <div className="flex flex-col-reverse justify-between lg:flex-row items-center py-12 md:py-24 gap-12">
             {/* Left Content */}
-
             <div data-aos="fade-right" className="w-full lg:w-1/2">
               <p className="text-red-400 text-sm font-semibold mb-2">
                 Share & Save
@@ -33,15 +32,15 @@ const HeroBanner = () => {
                 reduce food waste and build a caring community.
               </p>
 
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col md:flex-row items-center gap-4">
+                <input
+                  placeholder="🔍 Search Foods"
+                  className="px-4 md:px-6 border max-sm:w-full py-2 md:py-3 rounded-xl border-red-500 text-black transition-all duration-300"
+                  type="text"
+                />
                 <BtnPrimary
                   link={"/available-foods"}
                   text={"🍽️ View All Foods"}
-                />
-                <input
-                  placeholder="🔍 Search Foods"
-                  className="px-4 md:px-6 border py-2 md:py-3 rounded-xl border-red-500 text-black transition-all duration-300"
-                  type="text"
                 />
               </div>
             </div>
@@ -52,11 +51,11 @@ const HeroBanner = () => {
               className="w-full lg:w-1/2 relative max-md:mt-10 flex justify-center"
             >
               {/* Background circular badge */}
-              <div className="absolute -bottom-10 -left-8 hidden md:block">
+              <div className="absolute -bottom-18 -left-8 hidden md:block">
                 <img
                   src="https://images.unsplash.com/photo-1683260644159-e8423e0fb44f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2080"
                   alt="circle"
-                  className="w-40 h-40 opacity-80 object-cover rounded-full animate-spin-slow"
+                  className="w-50 h-50 animate-spin [animation-duration:10s] opacity-80 object-cover rounded-full"
                 />
               </div>
 

@@ -1,10 +1,14 @@
 import BtnPrimary from "../components/BtnPrimary";
 import errorimg from "../assets/illustration.svg";
 import Container from "../components/Container";
+import { Helmet } from "react-helmet";
 
 const ErrorPage = () => {
   return (
     <section className="bg-white">
+      <Helmet>
+        <title>FoodCircle | Error</title>
+      </Helmet>
       <Container>
         <div className="min-h-screen px-6 py-12 lg:flex lg:items-center lg:gap-12">
           <div className="w-full lg:w-1/2">
