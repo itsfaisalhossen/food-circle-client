@@ -72,119 +72,120 @@ const UpdateFood = () => {
           title1="Update Your Food"
           title2="Easily update your donated food details to keep information accurate, helping others find fresh, available meals."
         />
-
-        <form onSubmit={handleSubmit} className="space-y-8">
-          {/* --- Food Information --- */}
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <label className="block mb-2 text-sm font-semibold text-gray-700">
-                Food Name
-              </label>
-              <input
-                type="text"
-                name="foodName"
-                defaultValue={foodInfo?.foodName}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
+        <div className="" data-aos="fade-up">
+          <form onSubmit={handleSubmit} className="space-y-8">
+            {/* --- Food Information --- */}
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <label className="block mb-2 text-sm font-semibold text-gray-700">
+                  Food Name
+                </label>
+                <input
+                  type="text"
+                  name="foodName"
+                  defaultValue={foodInfo?.foodName}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
                 focus:ring focus:ring-red-400 focus:border-transparent outline-none"
-                required
-              />
-            </div>
+                  required
+                />
+              </div>
 
-            <div>
-              <label className="block mb-2 text-sm font-semibold text-gray-700">
-                Food Image URL
-              </label>
-              <input
-                type="text"
-                name="foodUrl"
-                defaultValue={foodInfo?.foodUrl}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
+              <div>
+                <label className="block mb-2 text-sm font-semibold text-gray-700">
+                  Food Image URL
+                </label>
+                <input
+                  type="text"
+                  name="foodUrl"
+                  defaultValue={foodInfo?.foodUrl}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
                 focus:ring focus:ring-red-400 focus:border-transparent outline-none"
-                required
-              />
-            </div>
+                  required
+                />
+              </div>
 
-            <div>
-              <label className="block mb-2 text-sm font-semibold text-gray-700">
-                Food Quantity
-              </label>
-              <input
-                type="number"
-                name="foodQuantity"
-                defaultValue={foodInfo?.foodQuantity}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
+              <div>
+                <label className="block mb-2 text-sm font-semibold text-gray-700">
+                  Food Quantity
+                </label>
+                <input
+                  type="number"
+                  name="foodQuantity"
+                  defaultValue={foodInfo?.foodQuantity}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
                 focus:ring focus:ring-red-400 focus:border-transparent outline-none"
-                required
-              />
-            </div>
+                  required
+                />
+              </div>
 
-            <div>
-              <label className="block mb-2 text-sm font-semibold text-gray-700">
-                Pickup Location
-              </label>
-              <input
-                type="text"
-                name="location"
-                defaultValue={foodInfo?.location}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
+              <div>
+                <label className="block mb-2 text-sm font-semibold text-gray-700">
+                  Pickup Location
+                </label>
+                <input
+                  type="text"
+                  name="location"
+                  defaultValue={foodInfo?.location}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
                 focus:ring focus:ring-red-400 focus:border-transparent outline-none"
-                required
-              />
-            </div>
+                  required
+                />
+              </div>
 
-            <div>
-              <label className="block mb-2 text-sm font-semibold text-gray-700">
-                Expire Date
-              </label>
-              <input
-                type="date"
-                name="date"
-                defaultValue={foodInfo?.date}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
+              <div>
+                <label className="block mb-2 text-sm font-semibold text-gray-700">
+                  Expire Date
+                </label>
+                <input
+                  type="date"
+                  name="date"
+                  defaultValue={foodInfo?.date}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
                 focus:ring focus:ring-red-400 focus:border-transparent outline-none"
-                required
-              />
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm font-semibold text-gray-700">
+                  Status
+                </label>
+                <input
+                  type="text"
+                  name="status"
+                  defaultValue={foodInfo?.status}
+                  readOnly
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-500 cursor-not-allowed"
+                />
+              </div>
             </div>
 
+            {/* --- Additional Notes --- */}
             <div>
               <label className="block mb-2 text-sm font-semibold text-gray-700">
-                Status
+                Additional Notes
               </label>
-              <input
-                type="text"
-                name="status"
-                defaultValue={foodInfo?.status}
-                readOnly
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-500 cursor-not-allowed"
-              />
-            </div>
-          </div>
-
-          {/* --- Additional Notes --- */}
-          <div>
-            <label className="block mb-2 text-sm font-semibold text-gray-700">
-              Additional Notes
-            </label>
-            <textarea
-              name="aditionalNote"
-              defaultValue={foodInfo?.aditionalNote}
-              rows="4"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
+              <textarea
+                name="aditionalNote"
+                defaultValue={foodInfo?.aditionalNote}
+                rows="4"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 
               focus:ring focus:ring-red-400 focus:border-transparent outline-none resize-none"
-            ></textarea>
-          </div>
+              ></textarea>
+            </div>
 
-          {/* --- Submit Button --- */}
-          <div className="text-center">
-            <input
-              type="submit"
-              value="Update Food"
-              className="lg:w-1/2 cursor-pointer px-6 md:px-10 py-2.5 md:py-3 text-center 
+            {/* --- Submit Button --- */}
+            <div className="text-center">
+              <input
+                type="submit"
+                value="Update Food"
+                className="lg:w-1/2 cursor-pointer px-6 md:px-10 py-2.5 md:py-3 text-center 
               rounded-xl bg-gray-950 text-white hover:bg-red-500 transition-all duration-300 
               text-[14px] font-semibold md:text-[18px]"
-            />
-          </div>
-        </form>
+              />
+            </div>
+          </form>
+        </div>
       </Container>
     </div>
   );

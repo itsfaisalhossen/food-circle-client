@@ -3,10 +3,12 @@ import Container from "../components/Container";
 import SectionTitle from "../components/SectionTitle";
 import FoodsCard from "../components/FoodsCard";
 import { Helmet } from "react-helmet";
+import Loading from "../components/Loading";
 
 const AvailableFoods = () => {
   const [availableFoods, setAvailableFoods] = useState([]);
   const [loading, setLoading] = useState(true);
+  console.log(availableFoods);
 
   useEffect(() => {
     setLoading(true);
@@ -24,9 +26,7 @@ const AvailableFoods = () => {
   if (loading) {
     return (
       <Container>
-        <div className="text-center py-34">
-          <div className="animate-spin rounded-full h-14 w-14 border-b-4 border-red-700 mx-auto"></div>
-        </div>
+        <Loading />
       </Container>
     );
   }

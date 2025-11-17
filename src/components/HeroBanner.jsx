@@ -25,7 +25,7 @@ const HeroBanner = () => {
                 </span>{" "}
                 Healthy Food
               </h1>
-              <p className="text-gray-800 text-lg mb-8 max-w-md">
+              <p className="text-gray-800 text-lg mb-8 w-full md:max-w-md">
                 Join{" "}
                 <span className="font-semibold text-red-400">Food Circle</span>{" "}
                 — a platform where people share surplus meals with others to
@@ -51,7 +51,7 @@ const HeroBanner = () => {
               className="w-full lg:w-1/2 relative max-md:mt-10 flex justify-center"
             >
               {/* Background circular badge */}
-              <div className="absolute -bottom-18 -left-8 hidden md:block">
+              <div className="absolute -bottom-18 -left-8 hidden lg:block">
                 <img
                   src="https://images.unsplash.com/photo-1683260644159-e8423e0fb44f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2080"
                   alt="circle"

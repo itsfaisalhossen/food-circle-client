@@ -1,13 +1,9 @@
 import { Link } from "react-router";
-import BtnPrimary from "./BtnPrimary";
 import Container from "./Container";
 import FoodsCard from "./FoodsCard";
 import SectionTitle from "./SectionTitle";
-import BtnOutLine from "./BtnOutLine";
 
 const FeaturedFoods = ({ foodItem }) => {
-  console.log(foodItem);
-
   return (
     <div>
       <Container>

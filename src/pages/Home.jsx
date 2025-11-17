@@ -6,6 +6,7 @@ import NewsletterCTASection from "../components/NewsletterCTASection";
 import OurMission from "../components/OurMission";
 import SafetySection from "../components/SafetySection";
 import { Helmet } from "react-helmet";
+import Loading from "../components/Loading";
 
 const fetchFoodsData = async () => {
   const res = await fetch(
@@ -16,14 +17,24 @@ const fetchFoodsData = async () => {
 
 const Home = () => {
   const [foodItem, setFoodItem] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchFoodsData();
-      setFoodItem(data);
+      try {
+        const data = await fetchFoodsData();
+        setFoodItem(data);
+      } finally {
+        setLoading(false);
+      }
     };
     loadData();
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="space-y-12 md:space-y-24">
       <Helmet>
@@ -38,4 +49,5 @@ const Home = () => {
     </div>
   );
 };
+
 export default Home;

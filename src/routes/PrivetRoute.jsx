@@ -1,15 +1,14 @@
 import { Navigate, useLocation } from "react-router";
-import LoadingSpinner from "../components/LoadingSpinner";
 import useAuth from "../hooks/useAuth";
+import Loading from "../components/Loading";
 
 const PrivetRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  console.log(user);
 
   const location = useLocation();
 
   if (loading) {
-    return <LoadingSpinner />;
+    return <Loading />;
   }
 
   if (user && user?.email) {

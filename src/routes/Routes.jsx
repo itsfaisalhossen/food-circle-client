@@ -12,11 +12,13 @@ import MyFoodRequests from "../pages/MyFoodRequests";
 import AddFoods from "../pages/AddFoods";
 import PrivetRoute from "./PrivetRoute";
 import UpdateFood from "../pages/UpdateFood";
+import Loading from "../components/Loading";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
+    hydrateFallbackElement: <Loading />,
     children: [
       { index: true, element: <Home /> },
       {
